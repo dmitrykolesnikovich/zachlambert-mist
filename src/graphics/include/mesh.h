@@ -16,14 +16,15 @@ struct Vertex {
     glm::vec3 normal;
 };
 
-enum class TextureType {
-    DIFFUSE,
-    SPECULAR
-};
-
-struct Texture {
-    unsigned int id;
-    TextureType type;
+/* Currently supported material properties
+ * - Diffuse rgb: Texture or constant (used for ambient as well)
+ * - Specular value: Texture (grayscale) or constant
+ */
+struct Material {
+    unsigned int diffuse_texture;
+    float diffuse_value;
+    unsigned int specular_texture;
+    float specular_value;
 };
 
 class Mesh {
@@ -31,7 +32,7 @@ public:
     Mesh(
         const std::vector<Vertex> &vertices,
         const std::vector<unsigned int> &indices,
-        const std::vector<Texture> &textures);
+        const std::vector<Material> &textures);
     void render(const Shader &shader)const;
     // Raw mesh data
     std::vector<Vertex> vertices;
