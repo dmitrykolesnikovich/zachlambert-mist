@@ -1,0 +1,6 @@
+build/
+compile_commands.json
+core
+debug_build
+main
+release_build
