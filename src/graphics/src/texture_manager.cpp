@@ -1,24 +1,11 @@
 #include "texture_manager.h"
 
+#include <GL/glew.h>
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
-const Texture &TextureManager::get_texture(const std::string &relative_path)
-{
-    std::unordered_map<std::string, Texture>::const_iterator search
-        = textures.find(relative_path);
-    if (find != textures.end()) {
-        return find->second;
-    } else {
-        std::pair<std::string, Texture> new_pair(
-            relative_path,
-            load_texture(root_dir + relative_path)
-        );
-        return textures.insert(new_pair)->second;
-    }
-}
 
-Texture load_texture(const std::string &texture_path)
+unsigned int load_texture(const std::string &texture_path)
 {
     int width, height, num_channels;
     unsigned char *data = stbi_load(texture_path.c_str(), &width, &height, &num_channels, 0);
@@ -53,6 +40,22 @@ Texture load_texture(const std::string &texture_path)
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         stbi_image_free(data);
-        return Texture{ texture_id };
+        return texture_id;
     }
-}(
+}
+
+
+const Texture &TextureManager::get_texture(const std::string &relative_path)
+{
+    std::unordered_map<std::string, Texture>::const_iterator search
+        = textures.find(relative_path);
+    if (search != textures.end()) {
+        return search->second;
+    } else {
+        std::pair<std::string, Texture> new_pair(
+            relative_path,
+            { load_texture(root_dir + relative_path) }
+        );
+        return textures.insert(new_pair).first->second;
+    }
+}

@@ -1,5 +1,7 @@
 #include "shader_manager.h"
 
+#include <GL/glew.h>
+
 #include <fstream>
 #include <sstream>
 #include <iostream>
@@ -23,7 +25,7 @@ bool load_file_into_string(const std::string &file_path, std::string& string)
 void compile_and_check_shader(
     const std::string  &file_path,
     const std::string &code,
-    const GLuint& shader_id)
+    const unsigned int shader_id)
 {
     GLint result = GL_FALSE;
     int info_log_length;
@@ -46,11 +48,11 @@ void compile_and_check_shader(
     }
 }
 
-Shader load_shader(const std::string &vs_path, const std::string &fs_path);
+Shader load_shader(const std::string &vs_path, const std::string &fs_path)
 {
     // Create shaders
-    GLuint vertex_shader_id = glCreateShader(GL_VERTEX_SHADER);
-    GLuint fragment_shader_id = glCreateShader(GL_FRAGMENT_SHADER);
+    unsigned int vertex_shader_id = glCreateShader(GL_VERTEX_SHADER);
+    unsigned int fragment_shader_id = glCreateShader(GL_FRAGMENT_SHADER);
 
     std::string vertex_shader_code;
     if (!load_file_into_string(vs_path, vertex_shader_code)) {
@@ -101,18 +103,21 @@ Shader load_shader(const std::string &vs_path, const std::string &fs_path);
     return Shader(program_id);
 }
 
-const Shader &ShaderManager::get_shader(const std::string &relative_path)
+const Shader &ShaderManager::get_shader(
+    const std::string &vs_relative_path,
+    const std::string &fs_relative_path)
 {
+    const std::string key = vs_relative_path + " " + fs_relative_path;
     std::unordered_map<std::string, Shader>::const_iterator search
-        = shaders.find(relative_path);
-    if (find != shaders.end()) {
-        return find->second;
+        = shaders.find(key);
+    if (search != shaders.end()) {
+        return search->second;
     } else {
         std::pair<std::string, Shader> new_pair(
-            relative_path,
-            load_shader(root_dir + relative_path)
+            key,
+            load_shader(root_dir + vs_relative_path, root_dir + fs_relative_path)
         );
-        return models.insert(new_pair)->second;
+        return shaders.insert(new_pair).first->second;
     }
 }
 

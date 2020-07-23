@@ -4,3 +4,4 @@ core
 debug_build
 main
 release_build
+.clangd/

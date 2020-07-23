@@ -1,12 +1,9 @@
 #include "shader.h"
 
-Shader::Shader(
-    const std::string &vertex_file_path,
-    const std::string &fragment_file_path)
+#include <GL/glew.h>
+
+Shader::Shader(unsigned int program_id):program_id(program_id)
 {
-    program_id = load_shaders(
-        vertex_file_path, fragment_file_path
-    );
     mvp_loc = glGetUniformLocation(program_id, "MVP");
     m_loc = glGetUniformLocation(program_id, "M");
     v_loc = glGetUniformLocation(program_id, "V");

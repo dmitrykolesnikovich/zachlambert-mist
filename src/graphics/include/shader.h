@@ -3,12 +3,11 @@
 
 #include <string>
 #include <glm/glm.hpp>
-#include "load_resources.h"
 #include "light.h"
 
 class Shader {
 public:
-    Shader(const std::string &vertex_file_path, const std::string &fragment_file_path);
+    Shader(unsigned int program_id);
     void use(const glm::mat4 &mvp, const glm::mat4 &m, const glm::mat4 &v, const Light &light)const;
 
     void set_bool(const std::string &name, bool value)const;

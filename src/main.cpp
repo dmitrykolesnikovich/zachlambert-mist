@@ -9,9 +9,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/transform.hpp>
 
-#include "load_resources.h"
 #include "world.h"
-#include "resources.h"
 #include "window.h"
 #include "fps_counter.h"
 #include "clock.h"
@@ -23,25 +21,7 @@ int main()
         return 1;
     }
 
-    Resources resources;
-    resources.models.push_back(Model(
-        "resources/models/chimney/chimney.obj",
-        "resources/textures/"
-    ));
-    resources.models.push_back(Model(
-        "resources/models/random/random.obj",
-        "resources/textures/"
-    ));
-    resources.models.push_back(Model(
-        "resources/models/box/box.obj",
-        "resources/textures/box/"
-    ));
-    resources.shaders.push_back(Shader(
-        "resources/shaders/default.vs",
-        "resources/shaders/default.fs"
-    ));
-
-    World world(resources);
+    World world;
 
     Clock clock;
     float dt;

@@ -6,6 +6,7 @@
 #include <glm/glm.hpp>
 
 #include "shader.h"
+#include "texture.h"
 
 // A vector or array of Vertexes will have the data laid out
 // in the desired order for our VBO, since a struct is just a collection
@@ -18,9 +19,9 @@ struct Vertex {
 
 
 struct Material {
-    unsigned int diffuse_texture;
+    const Texture &diffuse_texture;
     glm::vec3 diffuse_color;
-    unsigned int specular_texture;
+    const Texture &specular_texture;
     glm::vec3 specular_color;
 };
 

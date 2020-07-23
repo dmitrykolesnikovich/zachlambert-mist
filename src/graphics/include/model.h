@@ -1,5 +1,5 @@
 #ifndef MODEL_H
-#define MODEL_h
+#define MODEL_H
 
 #include <string>
 #include <vector>
