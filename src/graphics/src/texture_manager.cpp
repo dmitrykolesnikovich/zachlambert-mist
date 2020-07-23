@@ -40,9 +40,11 @@ unsigned int load_texture(const std::string &texture_path)
                 return 0;
         }
         glGenerateMipmap(GL_TEXTURE_2D);
-        // Always repeat the image
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-  		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+        // Avoid repeating images. Only works if tex_coords are allowed
+        // outside the [0, 1] range, which isn't allowed when using
+        // normalised values (which is more efficient)
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+  		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         stbi_image_free(data);

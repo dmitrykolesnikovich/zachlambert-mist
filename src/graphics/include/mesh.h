@@ -3,18 +3,25 @@
 
 #include <string>
 #include <vector>
+#include <GL/glew.h>
 #include <glm/glm.hpp>
 
 #include "shader.h"
 #include "texture.h"
 
-// A vector or array of Vertexes will have the data laid out
-// in the desired order for our VBO, since a struct is just a collection
-// of variables, which are laid out sequentially in memory
 struct Vertex {
-    glm::vec3 position;
-    glm::vec2 tex_coords;
-    glm::vec3 normal;
+    glm::vec<3, GLfloat> position; // 3*4 = 12 bytes
+    glm::vec<2, GLushort> tex_coords; // 2*2 = 4 bytes
+    union {
+        int normal_i32;
+        struct {
+            int nx:10;
+            int ny:10;
+            int nz:10;
+            int nw:2;
+        };
+    };
+    Vertex(glm::vec3 position, glm::vec2 tex_coords, glm::vec3 normal);
 };
 
 

@@ -14,25 +14,27 @@ void process_mesh(TextureManager &texture_manager, std::vector<Mesh> &meshes, co
     std::cout << "Processing mesh" << std::endl;
     // Process vertices
     std::vector<Vertex> vertices;
+    glm::vec3 position;
+    glm::vec2 tex_coords;
+    glm::vec3 normal;
     for (std::size_t i = 0; i < mesh->mNumVertices; i++) {
-        Vertex vertex;
-        vertex.position = glm::vec3(
+        position = glm::vec3(
             mesh->mVertices[i].x,
             mesh->mVertices[i].y,
             mesh->mVertices[i].z
         );
-        vertex.tex_coords = glm::vec2(
+        tex_coords = glm::vec2(
             // Can have up to 8 sets of texture coords
             // per vertex. We're just using the first.
             mesh->mTextureCoords[0][i].x,
             mesh->mTextureCoords[0][i].y
         );
-        vertex.normal = glm::vec3(
+        normal = glm::vec3(
             mesh->mNormals[i].x,
             mesh->mNormals[i].y,
             mesh->mNormals[i].z
         );
-        vertices.push_back(vertex);
+        vertices.push_back(Vertex(position, tex_coords, normal));
     }
 
     // Process indices
