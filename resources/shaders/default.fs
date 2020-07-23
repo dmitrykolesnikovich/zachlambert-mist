@@ -23,7 +23,7 @@ uniform vec3 LightColor;
 void main(){
     vec3 MaterialDiffuseColor = texture(material.diffuse, UV).rgb;
     vec3 MaterialAmbientColor = vec3(0.1,0.1,0.1) * MaterialDiffuseColor;
-    vec3 MaterialSpecularColor = vec3(0.3,0.3,0.3) * texture(material.specular, UV).rgb;
+    vec3 MaterialSpecularColor = texture(material.specular, UV).rgb;
 
     float distance = length(LightPosition_worldspace - Position_worldspace);
 
