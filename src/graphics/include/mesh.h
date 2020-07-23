@@ -8,6 +8,7 @@
 
 #include "shader.h"
 #include "texture.h"
+#include "material.h"
 
 struct Vertex {
     glm::vec<3, GLfloat> position; // 3*4 = 12 bytes
@@ -24,13 +25,6 @@ struct Vertex {
     Vertex(glm::vec3 position, glm::vec2 tex_coords, glm::vec3 normal);
 };
 
-
-struct Material {
-    const Texture &diffuse_texture;
-    glm::vec3 diffuse_color;
-    const Texture &specular_texture;
-    glm::vec3 specular_color;
-};
 
 class Mesh {
 public:

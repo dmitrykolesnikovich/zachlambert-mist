@@ -5,24 +5,31 @@ World::World():
     texture_manager("resources/textures/"),
     shader_manager("resources/shaders/")
 {
-    const int size = 30;
-    for (int i = -size; i <=size; i++) {
-        for (int j = -size; j <=size; j++) {
-            entities.push_back(Entity(
-                model_manager.get_model(texture_manager, "box/box.obj"),
-                shader_manager.get_shader("default.vs", "default.fs")
-            ));
-            float dist = hypot(2*i, 2*j);
-            glm::vec3 pos(2.0f*i, 0, 2.0f*j);
-            entities.rbegin()->set_position(pos);
-            entities.rbegin()->set_orientation(glm::rotate(
-                glm::radians(-15.0f)*dist,
-                glm::normalize(glm::cross(glm::vec3(0.0f, 1.0f, 0.0f), pos))
-            ));
-        }
-    }
-    light.set_position(glm::vec3(0.0f, float(size), 0.0f));
-    light.set_power(2000.0f);
+    entities.push_back(Entity(
+        model_manager.get_model(texture_manager, "box/box.obj"),
+        shader_manager.get_shader("default.vs", "default.fs")
+    ));
+
+    entities.push_back(Entity(
+        model_manager.get_model(texture_manager, "sword/sword.obj"),
+        shader_manager.get_shader("default.vs", "default.fs")
+    ));
+    entities[1].set_position(glm::vec3(4.0f, 0.0f, 0.0f));
+
+    entities.push_back(Entity(
+        model_manager.get_model(texture_manager, "golem/golem.obj"),
+        shader_manager.get_shader("default.vs", "default.fs")
+    ));
+    entities[2].set_position(glm::vec3(-4.0f, 0.0f, 0.0f));
+
+    entities.push_back(Entity(
+        model_manager.get_model(texture_manager, "tree/tree.obj"),
+        shader_manager.get_shader("default.vs", "default.fs")
+    ));
+    entities[3].set_position(glm::vec3(0.0f, 0.0f, 4.0f));
+
+    light.set_position(glm::vec3(-5.0f, 5.0f, 5.0f));
+    light.set_power(20.0f);
     light.set_color(glm::vec3(1.0f, 1.0f, 1.0f));
 }
 

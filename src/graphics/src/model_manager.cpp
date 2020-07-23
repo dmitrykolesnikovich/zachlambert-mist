@@ -23,12 +23,12 @@ void process_mesh(TextureManager &texture_manager, std::vector<Mesh> &meshes, co
             mesh->mVertices[i].y,
             mesh->mVertices[i].z
         );
-        tex_coords = glm::vec2(
-            // Can have up to 8 sets of texture coords
-            // per vertex. We're just using the first.
-            mesh->mTextureCoords[0][i].x,
-            mesh->mTextureCoords[0][i].y
-        );
+        if (mesh->mNumUVComponents[0] == 2) {
+            tex_coords = glm::vec2(
+                mesh->mTextureCoords[0][i].x,
+                mesh->mTextureCoords[0][i].y
+            );
+        }
         normal = glm::vec3(
             mesh->mNormals[i].x,
             mesh->mNormals[i].y,
@@ -50,10 +50,12 @@ void process_mesh(TextureManager &texture_manager, std::vector<Mesh> &meshes, co
         }
     }
 
+    std::cout << "Processing material" << std::endl;
+
     // Process material
-    const Texture *diffuse_texture;
+    const Texture *diffuse_texture = 0;
     glm::vec3 diffuse_color;
-    const Texture *specular_texture;
+    const Texture *specular_texture = 0;
     glm::vec3 specular_color;
     if (mesh->mMaterialIndex >= 0) {
         aiMaterial *ai_material = scene->mMaterials[mesh->mMaterialIndex];
@@ -83,7 +85,7 @@ void process_mesh(TextureManager &texture_manager, std::vector<Mesh> &meshes, co
         );
     }
     Material material = {
-        *diffuse_texture, diffuse_color, *specular_texture, specular_color
+        diffuse_texture, diffuse_color, specular_texture, specular_color
     };
 
     meshes.push_back(Mesh(vertices, indices, material));

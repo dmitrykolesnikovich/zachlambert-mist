@@ -73,14 +73,7 @@ Mesh::Mesh(
 
 void Mesh::render(const Shader &shader)const
 {
-    glActiveTexture(GL_TEXTURE0);
-    shader.set_int("material.diffuse", 0);
-    glBindTexture(GL_TEXTURE_2D, material.diffuse_texture.id);
-
-    glActiveTexture(GL_TEXTURE1);
-    shader.set_int("material.specular", 1);
-    glBindTexture(GL_TEXTURE_2D, material.specular_texture.id);
-
+    shader.use_material(material);
     glActiveTexture(GL_TEXTURE0);
     glBindVertexArray(VAO);
     glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);

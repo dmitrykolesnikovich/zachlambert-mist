@@ -1,7 +1,7 @@
-build/
-compile_commands.json
-./core
-debug_build
-main
-release_build
-.clangd/
+/build/
+/compile_commands.json
+/debug_build
+/core
+/main
+/release_build
+/.clangd/

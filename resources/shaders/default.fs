@@ -8,8 +8,10 @@ in vec3 LightDirection_cameraspace;
 out vec3 color;
 
 struct Material {
-    sampler2D diffuse;
-    sampler2D specular;
+    sampler2D diffuse_texture;
+    vec3 diffuse_color;
+    sampler2D specular_texture;
+    vec3 specular_color;
 };
 
 uniform Material material;
@@ -21,9 +23,9 @@ uniform float LightPower;
 uniform vec3 LightColor;
 
 void main(){
-    vec3 MaterialDiffuseColor = texture(material.diffuse, UV).rgb;
+    vec3 MaterialDiffuseColor = material.diffuse_color + texture(material.diffuse_texture, UV).rgb;
     vec3 MaterialAmbientColor = vec3(0.1,0.1,0.1) * MaterialDiffuseColor;
-    vec3 MaterialSpecularColor = texture(material.specular, UV).rgb;
+    vec3 MaterialSpecularColor = material.specular_color + texture(material.specular_texture, UV).rgb;
 
     float distance = length(LightPosition_worldspace - Position_worldspace);
 

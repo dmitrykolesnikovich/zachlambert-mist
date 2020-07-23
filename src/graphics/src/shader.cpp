@@ -16,6 +16,19 @@ Shader::Shader(unsigned int program_id):program_id(program_id)
     light_color_loc = glGetUniformLocation(
         program_id, "LightColor"
     );
+
+    diffuse_texture_loc = glGetUniformLocation(
+        program_id, "material.diffuse_texture"
+    );
+    diffuse_color_loc = glGetUniformLocation(
+        program_id, "material.diffuse_color"
+    );
+    specular_texture_loc = glGetUniformLocation(
+        program_id, "material.specular_texture"
+    );
+    specular_color_loc = glGetUniformLocation(
+        program_id, "material.specular_color"
+    );
 }
 
 void Shader::use(const glm::mat4 &mvp, const glm::mat4 &m, const glm::mat4 &v, const Light &light)const
@@ -39,18 +52,31 @@ void Shader::use(const glm::mat4 &mvp, const glm::mat4 &m, const glm::mat4 &v, c
     );
 }
 
-void Shader::set_bool(const std::string &name, bool value)const
+void Shader::use_material(const Material &material)const
 {
-    glUniform1i(glGetUniformLocation(program_id, name.c_str()), (int)value);
-}
+    if (material.diffuse_texture) {
+        glActiveTexture(GL_TEXTURE0);
+        glUniform1i(diffuse_texture_loc, 0);
+        glBindTexture(GL_TEXTURE_2D, material.diffuse_texture->id);
+    } else {
+        glUniform3f(
+            diffuse_color_loc,
+            material.diffuse_color.x,
+            material.diffuse_color.y,
+            material.diffuse_color.z
+        );
+    }
 
-void Shader::set_int(const std::string &name, int value)const
-{
-    glUniform1i(glGetUniformLocation(program_id, name.c_str()), value);
+    if (material.specular_texture) {
+        glActiveTexture(GL_TEXTURE1);
+        glUniform1i(specular_texture_loc, 1);
+        glBindTexture(GL_TEXTURE_2D, material.specular_texture->id);
+    } else {
+        glUniform3f(
+            specular_color_loc,
+            material.specular_color.x,
+            material.specular_color.y,
+            material.specular_color.z
+        );
+    }
 }
-
-void Shader::set_float(const std::string &name, float value)const
-{
-    glUniform1f(glGetUniformLocation(program_id, name.c_str()), value);
-}
-

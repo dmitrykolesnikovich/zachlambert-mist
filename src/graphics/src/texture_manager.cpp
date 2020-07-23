@@ -55,6 +55,7 @@ unsigned int load_texture(const std::string &texture_path)
 
 const Texture &TextureManager::get_texture(const std::string &relative_path)
 {
+    std::cout << "Getting texture " << relative_path << std::endl;
     std::unordered_map<std::string, Texture>::const_iterator search
         = textures.find(relative_path);
     if (search != textures.end()) {
