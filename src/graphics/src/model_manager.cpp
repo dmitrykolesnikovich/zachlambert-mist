@@ -9,8 +9,9 @@
 #include "mesh.h"
 
 
-void process_mesh(TextureManager &texture_manager, std::vector<Mesh> meshes, const aiScene *scene, aiMesh *mesh)
+void process_mesh(TextureManager &texture_manager, std::vector<Mesh> &meshes, const aiScene *scene, aiMesh *mesh)
 {
+    std::cout << "Processing mesh" << std::endl;
     // Process vertices
     std::vector<Vertex> vertices;
     for (std::size_t i = 0; i < mesh->mNumVertices; i++) {
@@ -87,7 +88,7 @@ void process_mesh(TextureManager &texture_manager, std::vector<Mesh> meshes, con
 }
 
 
-void process_node(TextureManager texture_manager, std::vector<Mesh> meshes, const aiScene *scene, aiNode *node)
+void process_node(TextureManager &texture_manager, std::vector<Mesh> &meshes, const aiScene *scene, aiNode *node)
 {
     for (std::size_t i = 0; i < node->mNumMeshes; i++) {
         aiMesh *mesh = scene->mMeshes[node->mMeshes[i]];
@@ -101,6 +102,7 @@ void process_node(TextureManager texture_manager, std::vector<Mesh> meshes, cons
 
 Model load_model(TextureManager &texture_manager, const std::string& model_path)
 {
+    std::cout << "Loading model " << model_path << std::endl;
     Assimp::Importer importer;
     const aiScene *scene = importer.ReadFile(
         model_path.c_str(),
