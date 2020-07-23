@@ -4,10 +4,10 @@
 Mesh::Mesh(
         const std::vector<Vertex> &vertices_in,
         const std::vector<unsigned int> &indices_in,
-        const std::vector<Texture> &textures_in):
+        const Material &material):
     vertices(vertices_in),
     indices(indices_in),
-    textures(textures_in)
+    material(material_in)
 {
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);

@@ -16,15 +16,12 @@ struct Vertex {
     glm::vec3 normal;
 };
 
-/* Currently supported material properties
- * - Diffuse rgb: Texture or constant (used for ambient as well)
- * - Specular value: Texture (grayscale) or constant
- */
+
 struct Material {
     unsigned int diffuse_texture;
-    float diffuse_value;
+    glm::vec3 diffuse_color;
     unsigned int specular_texture;
-    float specular_value;
+    glm::vec3 specular_color;
 };
 
 class Mesh {
@@ -32,12 +29,12 @@ public:
     Mesh(
         const std::vector<Vertex> &vertices,
         const std::vector<unsigned int> &indices,
-        const std::vector<Material> &textures);
+        const Material &material);
     void render(const Shader &shader)const;
     // Raw mesh data
     std::vector<Vertex> vertices;
     std::vector<unsigned int> indices;
-    std::vector<Texture> textures;
+    Material material;
 private:
     // Render data
     unsigned int VAO, VBO, EBO;

@@ -108,29 +108,3 @@ unsigned int load_shaders(
 }
 
 
-unsigned int load_texture(const std::string &image_path)
-{
-    int width, height, num_channels;
-    // stbi_set_flip_vertically_on_load(true);
-    unsigned char *data = stbi_load(image_path.c_str(), &width, &height, &num_channels, 3);
-    if (!data) {
-        printf("Failed to load image %s.\n", image_path.c_str());
-        return 0;
-    } else {
-        GLuint texture_id;
-        glGenTextures(1, &texture_id);
-        glBindTexture(GL_TEXTURE_2D, texture_id);
-        glTexImage2D(
-            GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data
-        );
-        glGenerateMipmap(GL_TEXTURE_2D);
-        // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-  		// glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-  		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        stbi_image_free(data);
-        return texture_id;
-    }
-}
