@@ -4,14 +4,15 @@
 #include <string>
 #include <unordered_map>
 
+#include "texture.h"
+
 class TextureManager {
 public:
     TextureManager(const std::string &root_dir):root_dir(root_dir) {}
-    const unsigned int get_texture(const std::string &relative_path);
-    unsigned int load_texture(const std::string &relative_path);
+    const Texture &get_texture(const std::string &relative_path);
 private:
     const std::string root_dir;
-    std::unordered_map<std::string, unsigned int> textures;
+    std::unordered_map<std::string, Texture> textures;
 };
 
 #endif

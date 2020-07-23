@@ -13,7 +13,7 @@ const Model &ModelManager::get_model(const std::string &relative_path);
     if (find != models.end()) {
         return find->second;
     } else {
-        std::path<std::string, Model> new_pair(
+        std::pair<std::string, Model> new_pair(
             relative_path,
             load_model(root_dir + relative_path)
         );
@@ -21,7 +21,7 @@ const Model &ModelManager::get_model(const std::string &relative_path);
     }
 }
 
-void load_model(const std::string& model_path)
+void load_model(TextureManager &texture_manager, const std::string& model_path)
 {
     Assimp::Importer importer;
     const aiScene *scene = importer.ReadFile(
@@ -32,22 +32,22 @@ void load_model(const std::string& model_path)
         std::cout << "ERROR::ASSIMP::" << importer.GetErrorString() << std::endl;
     }
     std::vector<Mesh> meshes;
-    process_node(meshes, scene, scene->mRootNode);
+    process_node(texture_manager, meshes, scene, scene->mRootNode);
     return Model(meshes);
 }
 
-void process_node(std::vector<Mesh> meshes, const aiScene *scene, aiNode *node)
+void process_node(TextureManager texture_manager, std::vector<Mesh> meshes, const aiScene *scene, aiNode *node)
 {
     for (std::size_t i = 0; i < node->mNumMeshes; i++) {
         aiMesh *mesh = scene->mMeshes[node->mMeshes[i]];
-        process_mesh(meshes, scene, mesh);
+        process_mesh(texture_manager, meshes, scene, mesh);
     }
     for (std::size_t i = 0; i < node->mNumChildren; i++) {
-        process_node(meshes, scene, node->mChildren[i]);
+        process_node(texture_manager, meshes, scene, node->mChildren[i]);
     }
 }
 
-void process_mesh(std::vector<Mesh> meshes, const aiScene *scene, aiMesh *mesh)
+void process_mesh(TextureManager &texture_manager, std::vector<Mesh> meshes, const aiScene *scene, aiMesh *mesh)
 {
     // Process vertices
     std::vector<Vertex> vertices;

@@ -1,13 +1,9 @@
-#include "load_resources.h"
+#include "shader_manager.h"
 
 #include <fstream>
 #include <sstream>
 #include <iostream>
 #include <vector>
-
-#include <GLFW/glfw3.h>
-#define STB_IMAGE_IMPLEMENTATION
-#include "stb_image.h"
 
 bool load_file_into_string(const std::string &file_path, std::string& string)
 {
@@ -50,30 +46,28 @@ void compile_and_check_shader(
     }
 }
 
-unsigned int load_shaders(
-    const std::string &vertex_file_path,
-    const std::string &fragment_file_path)
+Shader load_shader(const std::string &vs_path, const std::string &fs_path);
 {
     // Create shaders
     GLuint vertex_shader_id = glCreateShader(GL_VERTEX_SHADER);
     GLuint fragment_shader_id = glCreateShader(GL_FRAGMENT_SHADER);
 
     std::string vertex_shader_code;
-    if (!load_file_into_string(vertex_file_path, vertex_shader_code)) {
+    if (!load_file_into_string(vs_path, vertex_shader_code)) {
         return 0;
     }
 
     std::string fragment_shader_code;
-    if (!load_file_into_string(fragment_file_path, fragment_shader_code)) {
+    if (!load_file_into_string(fs_path, fragment_shader_code)) {
         return 0;
     }
 
     compile_and_check_shader(
-        vertex_file_path, vertex_shader_code, vertex_shader_id
+        vs_path, vertex_shader_code, vertex_shader_id
     );
 
     compile_and_check_shader(
-        fragment_file_path, fragment_shader_code, fragment_shader_id
+        fs_path, fragment_shader_code, fragment_shader_id
     );
 
     // Link the program
@@ -104,7 +98,21 @@ unsigned int load_shaders(
     glDeleteShader(vertex_shader_id);
     glDeleteShader(fragment_shader_id);
 
-    return program_id;
+    return Shader(program_id);
 }
 
+const Shader &ShaderManager::get_shader(const std::string &relative_path)
+{
+    std::unordered_map<std::string, Shader>::const_iterator search
+        = shaders.find(relative_path);
+    if (find != shaders.end()) {
+        return find->second;
+    } else {
+        std::pair<std::string, Shader> new_pair(
+            relative_path,
+            load_shader(root_dir + relative_path)
+        );
+        return models.insert(new_pair)->second;
+    }
+}
 
