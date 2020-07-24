@@ -1,5 +1,5 @@
-#ifndef ENTITY_CAMERA_H
-#define ENTITY_CAMERA_H
+#ifndef GRAPHICS_CAMERA_H
+#define GRAPHICS_CAMERA_H
 
 #include <glm/glm.hpp>
 
@@ -7,6 +7,7 @@
  * The forward direction of the camera is
  *
  */
+
 class Camera{
 public:
     Camera(

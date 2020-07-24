@@ -34,7 +34,7 @@
 struct RenderObject {
     const unsigned int VAO;
     const unsigned int index_count;
-    const glm::mat4 *mat_model;
+    const glm::mat4 *mat_m;
 };
 
 
@@ -43,11 +43,12 @@ public:
     Renderer() {}
     void render();
     void load_render_object(const Material *material, const Mesh* mesh, const glm::mat4 *mat_model);
-    void set_camera(Camera *camera);
-    void add_light();
+    void set_camera(Camera *camera){ this->camera = camera; }
+    void set_light(Light *light){ this->light = light; }
 private:
     std::map<Shader*, std::map<Material*, std::list<RenderObject>>> render_objects;
     const Camera *camera;
+    const Light *light;
 };
 
 #endif

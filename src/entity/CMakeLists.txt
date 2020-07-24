@@ -1,7 +1,7 @@
 get_filename_component(DIR_NAME ${CMAKE_CURRENT_SOURCE_DIR} NAME)
 set(MODULE_NAME lib${DIR_NAME})
 
-set(SRC src/entity.cpp src/camera.cpp)
+set(SRC src/entity.cpp)
 
 add_library(${MODULE_NAME} STATIC ${SRC})
 

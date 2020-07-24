@@ -19,7 +19,8 @@ Camera::Camera(
     projection(glm::perspective(
         glm::radians(fov_degrees), aspect_ratio, 0.1f, 100.0f)
     ),
-    update_position(true), update_directions(true) {}
+    update_position(true), update_directions(true) {
+}
 
 void Camera::update(float dt)
 {

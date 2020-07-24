@@ -1,19 +1,15 @@
-#ifndef ENTITY_ENTIT_H
+#ifndef ENTITY_ENTITY_H
 #define ENTITY_ENTITY_H
 
 #include <vector>
 
-#define GLM_ENABLE_EXPERIMENTAL
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtx/transform.hpp>
 
 #include "shader.h"
-#include "camera.h"
 #include "light.h"
 #include "model.h"
+#include "texture.h"
+#include "camera.h"
 
 class Entity {
 public:

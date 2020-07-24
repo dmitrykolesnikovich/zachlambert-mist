@@ -1,6 +1,9 @@
 #ifndef WORLD_H
 #define WORLD_H
 
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
+
 #include "model_manager.h"
 #include "texture_manager.h"
 #include "shader_manager.h"

@@ -31,12 +31,28 @@ Shader::Shader(unsigned int program_id):program_id(program_id)
     );
 }
 
-void Shader::use(const glm::mat4 &mvp, const glm::mat4 &m, const glm::mat4 &v, const Light &light)const
+void Shader::use_program()const
 {
     glUseProgram(program_id);
-    glUniformMatrix4fv(mvp_loc, 1, GL_FALSE, &mvp[0][0]);
+}
+
+void Shader::use_mat_m(const glm::mat4 &m)const
+{
     glUniformMatrix4fv(m_loc, 1, GL_FALSE, &m[0][0]);
+}
+
+void Shader::use_mat_v(const glm::mat4 &v)const
+{
     glUniformMatrix4fv(v_loc, 1, GL_FALSE, &v[0][0]);
+}
+
+void Shader::use_mat_mvp(const glm::mat4 &mvp)const
+{
+    glUniformMatrix4fv(mvp_loc, 1, GL_FALSE, &mvp[0][0]);
+}
+
+void Shader::use_light(const Light &light)const
+{
     glUniform3f(
         light_pos_loc,
         light.get_position().x,

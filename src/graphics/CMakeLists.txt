@@ -2,9 +2,11 @@ get_filename_component(DIR_NAME ${CMAKE_CURRENT_SOURCE_DIR} NAME)
 set(MODULE_NAME lib${DIR_NAME})
 
 set(SRC
+    src/camera.cpp
     src/mesh.cpp
     src/model.cpp
     src/model_manager.cpp
+    src/renderer.cpp
     src/shader.cpp
     src/shader_manager.cpp
     src/texture_manager.cpp

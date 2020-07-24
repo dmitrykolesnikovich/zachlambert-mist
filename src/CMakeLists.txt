@@ -16,7 +16,7 @@ add_subdirectory(core)
 
 add_executable(main main.cpp)
 target_link_libraries(main
-    PRIVATE libcore libgraphics libentity libtiming
+    PRIVATE libgraphics libentity libtiming libcore
     PUBLIC ${COMMON_LIBS}
 )
 target_include_directories(main
