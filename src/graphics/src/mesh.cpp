@@ -20,9 +20,7 @@ Vertex::Vertex(glm::vec3 position, glm::vec2 tex_coords, glm::vec3 normal)
 
 Mesh::Mesh(
         const std::vector<Vertex> &vertices_in,
-        const std::vector<unsigned int> &indices_in,
-        const Material &material_in):
-    vertices(vertices_in),
+        const std::vector<unsigned short> &indices_in, const Material &material_in): vertices(vertices_in),
     indices(indices_in),
     material(material_in)
 {
@@ -42,7 +40,7 @@ Mesh::Mesh(
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
     glBufferData( GL_ELEMENT_ARRAY_BUFFER,
-        indices.size() * sizeof(unsigned int),
+        indices.size() * sizeof(unsigned short),
         &indices[0],
         GL_STATIC_DRAW
     );
@@ -74,7 +72,6 @@ Mesh::Mesh(
 void Mesh::render(const Shader &shader)const
 {
     shader.use_material(material);
-    glActiveTexture(GL_TEXTURE0);
     glBindVertexArray(VAO);
-    glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
+    glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_SHORT, 0);
 }

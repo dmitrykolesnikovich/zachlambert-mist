@@ -42,7 +42,7 @@ void process_mesh(TextureManager &texture_manager, std::vector<Mesh> &meshes, co
     // corresponding to primitives. Since the aiProcesss_Triangulate flag
     // was passed, these faces correspond to the triangle primitives.
     // This contains the indices of the vertices, in the correct order
-    std::vector<unsigned int> indices;
+    std::vector<unsigned short> indices;
     for (std::size_t i = 0; i < mesh->mNumFaces; i++) {
         aiFace face = mesh->mFaces[i];
         for (std::size_t j = 0; j < face.mNumIndices; j++) {
