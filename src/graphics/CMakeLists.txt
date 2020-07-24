@@ -16,10 +16,13 @@ add_library(${MODULE_NAME} STATIC ${SRC})
 
 target_include_directories(${MODULE_NAME}
     PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
-    PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src ${COMMON_INCLUDES}
+    PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src
 )
 
+add_library(stb INTERFACE)
+target_include_directories(stb INTERFACE /opt/stb)
+
 target_link_libraries(${MODULE_NAME}
-    PRIVATE ${COMMON_LIBS}
+    PRIVATE GL glfw GLEW assimp stb
 )
 
