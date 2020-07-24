@@ -20,5 +20,5 @@ target_link_libraries(main
     PUBLIC ${COMMON_LIBS}
 )
 target_include_directories(main
-    PRIVATE ${COMMON_INCLUDES}
+    PRIVATE
 )

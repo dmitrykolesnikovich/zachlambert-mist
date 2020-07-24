@@ -7,7 +7,7 @@ add_library(${MODULE_NAME} STATIC ${SRC})
 
 target_include_directories(${MODULE_NAME}
     PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
-    PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src ${COMMON_INCLUDES}
+    PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src
 )
 
 target_link_libraries(${MODULE_NAME}
