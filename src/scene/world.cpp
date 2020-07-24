@@ -1,5 +1,7 @@
 #include "scene/world.h"
 
+namespace scene {
+
 World::World():
     model_manager("data/models/"),
     texture_manager("data/textures/"),
@@ -93,4 +95,6 @@ void World::render()
     {
         it->render(camera, light);
     }
+}
+
 }

@@ -1,6 +1,8 @@
 #ifndef FPS_COUNTER_H
 #define FPS_COUNTER_H
 
+namespace window {
+
 class FpsCounter {
 public:
     FpsCounter();
@@ -10,5 +12,7 @@ private:
     double current_time;
     int num_frames = 0;
 };
+
+} // namespace window
 
 #endif

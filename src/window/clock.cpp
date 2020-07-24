@@ -2,6 +2,8 @@
 
 #include <GLFW/glfw3.h>
 
+namespace window {
+
 Clock::Clock()
 {
     prev_time = glfwGetTime();
@@ -14,3 +16,5 @@ float Clock::sample_dt()
     prev_time = current_time;
     return dt;
 }
+
+} // namespace window

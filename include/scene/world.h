@@ -10,6 +10,8 @@
 #include "scene/entity.h"
 #include "scene/camera.h"
 
+namespace scene {
+
 class World {
 public:
     World();
@@ -18,12 +20,14 @@ public:
     void update(float dt);
     void render();
 private:
-    ModelManager model_manager;
-    TextureManager texture_manager;
-    ShaderManager shader_manager;
-    Camera camera;
+    data::ModelManager model_manager;
+    data::TextureManager texture_manager;
+    data::ShaderManager shader_manager;
+    scene::Camera camera;
     std::vector<Entity> entities;
-    Light light;
+    scene::Light light;
 };
+
+} // namespace scene
 
 #endif

@@ -8,6 +8,8 @@
  *
  */
 
+namespace scene {
+
 class Camera{
 public:
     Camera(
@@ -50,5 +52,7 @@ private:
     bool update_position, update_directions;
     const float TILT_LIMIT = glm::radians(85.0f);
 };
+
+} // namespace scene
 
 #endif

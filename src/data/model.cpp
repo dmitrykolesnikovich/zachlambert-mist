@@ -4,6 +4,8 @@
 
 #include <glm/glm.hpp>
 
+namespace data {
+
 void Model::render(const Shader &shader)const
 {
     for (std::vector<Mesh>::const_iterator it = meshes.begin();
@@ -12,3 +14,5 @@ void Model::render(const Shader &shader)const
         it->render(shader);
     }
 }
+
+} // namespace data

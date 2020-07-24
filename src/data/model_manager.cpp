@@ -8,6 +8,7 @@
 
 #include "data/mesh.h"
 
+namespace data {
 
 void process_mesh(TextureManager &texture_manager, std::vector<Mesh> &meshes, const aiScene *scene, aiMesh *mesh)
 {
@@ -135,3 +136,5 @@ const Model &ModelManager::get_model(TextureManager &texture_manager, const std:
         return models.insert(new_pair).first->second;
     }
 }
+
+} // namespace data

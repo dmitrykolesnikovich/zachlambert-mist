@@ -16,17 +16,17 @@
 
 int main()
 {
-    Window window("Simple", 1024, 768);
+    window::Window window("Simple", 1024, 768);
     if (!window.initialise()) {
         return 1;
     }
 
-    World world;
+    scene::World world;
 
-    Clock clock;
+    window::Clock clock;
     float dt;
     #ifndef NDEBUG
-    FpsCounter fps_counter;
+    window::FpsCounter fps_counter;
     #endif
 
     do {

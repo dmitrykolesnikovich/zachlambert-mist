@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include <GLFW/glfw3.h>
 
+namespace window {
+
 FpsCounter::FpsCounter()
 {
     last_logged_time = glfwGetTime();
@@ -18,3 +20,5 @@ void FpsCounter::update()
         last_logged_time = current_time;
     }
 }
+
+} // namespace window

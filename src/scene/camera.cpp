@@ -6,6 +6,8 @@
 #include <glm/gtc/quaternion.hpp>
 #include <glm/gtx/quaternion.hpp>
 
+namespace scene {
+
 Camera::Camera(
         float fov_degrees,
         float aspect_ratio):
@@ -62,3 +64,5 @@ void Camera::update(float dt)
         view = glm::lookAt(position, position + forward, up);
     }
 }
+
+} // namespace scene

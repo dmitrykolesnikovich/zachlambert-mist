@@ -7,6 +7,8 @@
 #include <glm/gtc/quaternion.hpp>
 #include <glm/gtx/quaternion.hpp>
 
+namespace scene {
+
 void Entity::set_scale(float uniform_scale_factor)
 {
     model_scaling = glm::scale(glm::vec3(
@@ -40,4 +42,6 @@ void Entity::render(const Camera &camera, const Light &light)
     shader.use_mat_mvp(mvp);
 
     model.render(shader);
+}
+
 }

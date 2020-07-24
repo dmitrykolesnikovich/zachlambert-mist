@@ -6,6 +6,8 @@
 
 #include "data/mesh.h"
 
+namespace data {
+
 class Model {
 public:
     Model(const std::vector<Mesh> meshes):meshes(meshes) {}
@@ -13,5 +15,7 @@ public:
 private:
     std::vector<Mesh> meshes;
 };
+
+} // namespace data
 
 #endif

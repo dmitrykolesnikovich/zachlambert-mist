@@ -1,5 +1,6 @@
 #include "render/renderer.h"
 
+namespace render {
 
 void Renderer::render()
 {
@@ -10,7 +11,7 @@ void Renderer::render()
         it->first->use_mat_mvp(mvp);
         // Set uniforms for light information
         for (auto it2 = it->second.cbegin(); it2 != it->second.cbegin(); it2++) {
-            // setup material     
+            // setup material
             it->first->use_material(*it2->first);
             for (auto it3 = it2->second.cbegin(); it3 != it2->second.cend(); it3++) {
                 it->first->use_mat_m(*it3->mat_m);
@@ -22,7 +23,9 @@ void Renderer::render()
     }
 }
 
-void Renderer::load_render_object(const Material *material, const Mesh* mesh, const glm::mat4 *mat_model)
+void Renderer::load_render_object(const data::Material *material, const data::Mesh* mesh, const glm::mat4 *mat_model)
 {
 
 }
+
+} // namespace render

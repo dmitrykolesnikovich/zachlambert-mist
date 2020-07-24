@@ -5,6 +5,8 @@
 #include <GLFW/glfw3.h>
 #include <string>
 
+namespace window {
+
 class Window {
 public:
     Window(const std::string &name, unsigned int width, unsigned int height);
@@ -18,5 +20,7 @@ private:
     unsigned int height;
     GLFWwindow *window;
 };
+
+} // namespace window
 
 #endif

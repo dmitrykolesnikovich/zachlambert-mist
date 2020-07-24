@@ -2,6 +2,8 @@
 #include <iostream>
 #include <stdio.h>
 
+namespace data {
+
 Vertex::Vertex(glm::vec3 position, glm::vec2 tex_coords, glm::vec3 normal)
 {
     // Position straightforward
@@ -75,3 +77,5 @@ void Mesh::render(const Shader &shader)const
     glBindVertexArray(VAO);
     glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_SHORT, 0);
 }
+
+} // namespace data

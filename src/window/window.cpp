@@ -9,6 +9,8 @@
 
 #include <stdio.h>
 
+namespace window {
+
 Window::Window(const std::string &name, unsigned int width, unsigned int height):
     name(name), width(width), height(height), window(NULL) {}
 
@@ -45,3 +47,4 @@ bool Window::initialise()
     return true;
 }
 
+} // namespace window

@@ -11,9 +11,11 @@
 #include "data/texture.h"
 #include "scene/camera.h"
 
+namespace scene {
+
 class Entity {
 public:
-    Entity(const Model &model, const Shader &shader):
+    Entity(const data::Model &model, const data::Shader &shader):
         model(model), shader(shader) {}
 
     void set_scale(float uniform_scale_factor);
@@ -24,8 +26,8 @@ public:
     void render(const Camera &camera, const Light &light);
 
 private:
-    const Model &model;
-    const Shader &shader;
+    const data::Model &model;
+    const data::Shader &shader;
 
     glm::mat4 model_scaling = glm::mat4(1.0f);
     glm::mat4 model_rotation = glm::mat4(1.0f);
@@ -33,5 +35,7 @@ private:
     glm::mat4 m;
     glm::mat4 mvp;
 };
+
+} // namespace scene
 
 #endif

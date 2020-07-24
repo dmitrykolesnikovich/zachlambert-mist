@@ -6,6 +6,7 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
+namespace data {
 
 unsigned int load_texture(const std::string &texture_path)
 {
@@ -68,3 +69,5 @@ const Texture &TextureManager::get_texture(const std::string &relative_path)
         return textures.insert(new_pair).first->second;
     }
 }
+
+} // namespace data

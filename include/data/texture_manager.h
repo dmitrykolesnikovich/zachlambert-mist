@@ -6,6 +6,8 @@
 
 #include "data/texture.h"
 
+namespace data {
+
 class TextureManager {
 public:
     TextureManager(const std::string &root_dir):root_dir(root_dir) {}
@@ -14,5 +16,7 @@ private:
     const std::string root_dir;
     std::unordered_map<std::string, Texture> textures;
 };
+
+} // namespace data
 
 #endif

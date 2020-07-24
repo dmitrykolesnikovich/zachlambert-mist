@@ -7,6 +7,8 @@
 #include <iostream>
 #include <vector>
 
+namespace data {
+
 bool load_file_into_string(const std::string &file_path, std::string& string)
 {
     std::ifstream file_stream(file_path, std::ios::in);
@@ -121,3 +123,4 @@ const Shader &ShaderManager::get_shader(
     }
 }
 
+} // namespace data

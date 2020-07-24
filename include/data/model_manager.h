@@ -7,6 +7,8 @@
 #include "data/model.h"
 #include "data/texture_manager.h"
 
+namespace data {
+
 class ModelManager {
 public:
     ModelManager(const std::string &root_dir):root_dir(root_dir) {}
@@ -15,5 +17,7 @@ private:
     const std::string root_dir;
     std::unordered_map<std::string, Model> models;
 };
+
+} // namespace data
 
 #endif

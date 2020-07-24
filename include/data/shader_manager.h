@@ -6,6 +6,8 @@
 
 #include "data/shader.h"
 
+namespace data {
+
 class ShaderManager {
 public:
     ShaderManager(const std::string &root_dir):root_dir(root_dir) {}
@@ -16,5 +18,7 @@ private:
     const std::string root_dir;
     std::unordered_map<std::string, Shader> shaders;
 };
+
+} // namespace data
 
 #endif

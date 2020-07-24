@@ -3,6 +3,8 @@
 
 #include "data/texture.h"
 
+namespace data {
+
 // Use pointers to textures, to allow for a null pointer
 // when not using textures
 struct Material {
@@ -11,5 +13,7 @@ struct Material {
     const Texture *specular_texture;
     glm::vec3 specular_color;
 };
+
+} // namespace data
 
 #endif

@@ -10,6 +10,8 @@
 #include "data/texture.h"
 #include "data/material.h"
 
+namespace data {
+
 struct Vertex {
     glm::vec<3, GLfloat> position; // 3*4 = 12 bytes
     glm::vec<2, GLushort> tex_coords; // 2*2 = 4 bytes
@@ -41,5 +43,7 @@ private:
     // Render data
     unsigned int VAO, VBO, EBO;
 };
+
+} // namespace data
 
 #endif
