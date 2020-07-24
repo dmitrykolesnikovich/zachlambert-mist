@@ -1,4 +1,4 @@
-#include "clock.h"
+#include "window/clock.h"
 
 #include <GLFW/glfw3.h>
 

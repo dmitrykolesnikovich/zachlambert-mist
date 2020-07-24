@@ -4,11 +4,11 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
-#include "model_manager.h"
-#include "texture_manager.h"
-#include "shader_manager.h"
-#include "entity.h"
-#include "camera.h"
+#include "resources/model_manager.h"
+#include "resources/texture_manager.h"
+#include "resources/shader_manager.h"
+#include "scene/entity.h"
+#include "scene/camera.h"
 
 class World {
 public:

@@ -4,7 +4,7 @@
 #include <string>
 #include <unordered_map>
 
-#include "texture.h"
+#include "resources/texture.h"
 
 class TextureManager {
 public:

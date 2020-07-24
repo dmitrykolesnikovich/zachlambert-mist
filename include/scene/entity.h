@@ -5,11 +5,11 @@
 
 #include <glm/glm.hpp>
 
-#include "shader.h"
-#include "light.h"
-#include "model.h"
-#include "texture.h"
-#include "camera.h"
+#include "resources/shader.h"
+#include "scene/light.h"
+#include "resources/model.h"
+#include "resources/texture.h"
+#include "scene/camera.h"
 
 class Entity {
 public:

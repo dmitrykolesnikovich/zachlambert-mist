@@ -1,4 +1,4 @@
-#include "entity.h"
+#include "scene/entity.h"
 #include <iostream>
 
 #define GLM_ENABLE_EXPERIMENTAL

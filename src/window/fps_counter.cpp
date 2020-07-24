@@ -1,4 +1,4 @@
-#include "fps_counter.h"
+#include "window/fps_counter.h"
 
 #include <stdio.h>
 #include <GLFW/glfw3.h>

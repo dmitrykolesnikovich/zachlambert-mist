@@ -1,4 +1,4 @@
-#include "world.h"
+#include "scene/world.h"
 
 World::World():
     model_manager("resources/models/"),

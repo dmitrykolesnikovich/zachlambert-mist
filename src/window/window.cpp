@@ -1,4 +1,4 @@
-#include "window.h"
+#include "window/window.h"
 
 #define GLM_ENABLE_EXPERIMENTAL
 #include <GL/glew.h>

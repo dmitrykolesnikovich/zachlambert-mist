@@ -9,10 +9,10 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/transform.hpp>
 
-#include "world.h"
-#include "window.h"
-#include "fps_counter.h"
-#include "clock.h"
+#include "scene/world.h"
+#include "window/window.h"
+#include "window/fps_counter.h"
+#include "window/clock.h"
 
 int main()
 {

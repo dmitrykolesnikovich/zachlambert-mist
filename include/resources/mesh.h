@@ -6,9 +6,9 @@
 #include <GL/glew.h>
 #include <glm/glm.hpp>
 
-#include "shader.h"
-#include "texture.h"
-#include "material.h"
+#include "resources/shader.h"
+#include "resources/texture.h"
+#include "resources/material.h"
 
 struct Vertex {
     glm::vec<3, GLfloat> position; // 3*4 = 12 bytes

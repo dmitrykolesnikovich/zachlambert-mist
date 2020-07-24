@@ -4,8 +4,8 @@
 #include <string>
 #include <unordered_map>
 
-#include "model.h"
-#include "texture_manager.h"
+#include "resources/model.h"
+#include "resources/texture_manager.h"
 
 class ModelManager {
 public:

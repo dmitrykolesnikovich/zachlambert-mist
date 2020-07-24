@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 
-#include "mesh.h"
+#include "resources/mesh.h"
 
 class Model {
 public:

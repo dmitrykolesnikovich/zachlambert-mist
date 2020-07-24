@@ -3,8 +3,8 @@
 
 #include <string>
 #include <glm/glm.hpp>
-#include "light.h"
-#include "material.h"
+#include "scene/light.h"
+#include "resources/material.h"
 
 class Shader {
 public:
