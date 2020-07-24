@@ -1,2 +1,12 @@
 Rough outline of the current state of the project and what
 I'm working on.
+
+Purpose of resources, scene, renderer
+- Resources: Handles the resources required for rendering, including
+    shaders, textures/materials and meshes/models.
+- Scene: Handles all the information necessary for defining a scene
+    to be rendered, including the camera, lights, and entities, which
+    make use of resources.
+- Renderer: Take the scene information and render it. No rendering
+    logic should be included outside this directory. Other classes should
+    only contain the necessary information for rendering.
