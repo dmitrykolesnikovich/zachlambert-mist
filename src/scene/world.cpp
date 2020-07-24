@@ -1,9 +1,9 @@
 #include "scene/world.h"
 
 World::World():
-    model_manager("resources/models/"),
-    texture_manager("resources/textures/"),
-    shader_manager("resources/shaders/")
+    model_manager("data/models/"),
+    texture_manager("data/textures/"),
+    shader_manager("data/shaders/")
 {
     entities.push_back(Entity(
         model_manager.get_model(texture_manager, "box/box.obj"),

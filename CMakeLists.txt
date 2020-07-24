@@ -16,12 +16,12 @@ set(SRC
     src/window/clock.cpp
     src/window/window.cpp
     src/window/fps_counter.cpp
-    src/resources/mesh.cpp
-    src/resources/shader.cpp
-    src/resources/shader_manager.cpp
-    src/resources/model.cpp
-    src/resources/model_manager.cpp
-    src/resources/texture_manager.cpp
+    src/data/mesh.cpp
+    src/data/shader.cpp
+    src/data/shader_manager.cpp
+    src/data/model.cpp
+    src/data/model_manager.cpp
+    src/data/texture_manager.cpp
 )
 
 add_library(zgraphics ${SRC})
@@ -38,4 +38,6 @@ target_include_directories(zgraphics
 add_library(stb INTERFACE)
 target_include_directories(stb INTERFACE /opt/stb)
 
-target_link_libraries(zgraphics GL glfw glm assimp stb)
+target_link_libraries(zgraphics PUBLIC GL glfw GLEW assimp stb)
+
+add_subdirectory(examples)

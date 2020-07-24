@@ -4,9 +4,9 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
-#include "resources/model_manager.h"
-#include "resources/texture_manager.h"
-#include "resources/shader_manager.h"
+#include "data/model_manager.h"
+#include "data/texture_manager.h"
+#include "data/shader_manager.h"
 #include "scene/entity.h"
 #include "scene/camera.h"
 

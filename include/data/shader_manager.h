@@ -4,7 +4,7 @@
 #include <string>
 #include <unordered_map>
 
-#include "resources/shader.h"
+#include "data/shader.h"
 
 class ShaderManager {
 public:

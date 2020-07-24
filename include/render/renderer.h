@@ -26,10 +26,10 @@
 
 #include <glm/glm.hpp>
 
-#include "resources/shader.h"
+#include "data/shader.h"
 #include "scene/camera.h"
-#include "resources/material.h"
-#include "resources/mesh.h"
+#include "data/material.h"
+#include "data/mesh.h"
 
 struct RenderObject {
     const unsigned int VAO;

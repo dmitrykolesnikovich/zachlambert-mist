@@ -1,3 +1,0 @@
-cd ../examples/build
-cmake ..
-cmake --build .

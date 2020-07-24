@@ -1,4 +1,4 @@
-#include "resources/mesh.h"
+#include "data/mesh.h"
 #include <iostream>
 #include <stdio.h>
 

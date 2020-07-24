@@ -1,4 +1,4 @@
-#include "resources/shader_manager.h"
+#include "data/shader_manager.h"
 
 #include <GL/glew.h>
 

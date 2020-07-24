@@ -5,10 +5,10 @@
 
 #include <glm/glm.hpp>
 
-#include "resources/shader.h"
+#include "data/shader.h"
 #include "scene/light.h"
-#include "resources/model.h"
-#include "resources/texture.h"
+#include "data/model.h"
+#include "data/texture.h"
 #include "scene/camera.h"
 
 class Entity {

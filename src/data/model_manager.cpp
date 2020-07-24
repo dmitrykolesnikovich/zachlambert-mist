@@ -1,4 +1,4 @@
-#include "resources/model_manager.h"
+#include "data/model_manager.h"
 
 #include <iostream>
 
@@ -6,7 +6,7 @@
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 
-#include "resources/mesh.h"
+#include "data/mesh.h"
 
 
 void process_mesh(TextureManager &texture_manager, std::vector<Mesh> &meshes, const aiScene *scene, aiMesh *mesh)

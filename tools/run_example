@@ -1,0 +1,2 @@
+# Should be run from root directory with tools/run_example
+build/examples/example1

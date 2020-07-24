@@ -4,7 +4,7 @@
 #include <string>
 #include <glm/glm.hpp>
 #include "scene/light.h"
-#include "resources/material.h"
+#include "data/material.h"
 
 class Shader {
 public:
