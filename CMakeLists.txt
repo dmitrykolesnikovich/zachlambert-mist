@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.0)
 project(
-    "OPENGL Learning"
+    "Graphics Engine"
     VERSION 0.1.0
-    DESCRIPTION "Project to learn opengl"
+    DESCRIPTION "Learning opengl by building a simple graphics engine"
     LANGUAGES CXX
 )
 
