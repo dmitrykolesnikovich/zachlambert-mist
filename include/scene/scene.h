@@ -12,10 +12,10 @@
 
 namespace mist {
 
-class World {
+class Scene {
 public:
-    World();
-    ~World() {}
+    Scene();
+    ~Scene() {}
     void handle_input(GLFWwindow *window, const int WIDTH, const int HEIGHT);
     void update(float dt);
     void render();

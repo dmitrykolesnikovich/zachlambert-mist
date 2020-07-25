@@ -14,6 +14,7 @@ public:
     void render(const Shader &shader)const;
 private:
     std::vector<Mesh> meshes;
+    std::vector<Material> materials;
 };
 
 } // namespace mist

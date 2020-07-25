@@ -31,14 +31,9 @@
 #include "scene/light.h"
 #include "data/material.h"
 #include "data/mesh.h"
+#include "scene/entity.h"
 
 namespace mist {
-
-struct RenderObject {
-    const unsigned int VAO;
-    const unsigned int index_count;
-    const glm::mat4 *mat_m;
-};
 
 
 class Renderer {
@@ -49,7 +44,7 @@ public:
     void set_camera(Camera *camera){ this->camera = camera; }
     void set_light(Light *light){ this->light = light; }
 private:
-    std::map<Shader*, std::map<Material*, std::list<RenderObject>>> render_objects;
+    std::list<Entity*> entities;
     const Camera *camera;
     const Light *light;
 };

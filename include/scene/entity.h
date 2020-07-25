@@ -15,19 +15,18 @@ namespace mist {
 
 class Entity {
 public:
-    Entity(const Model &model, const Shader &shader):
-        model(model), shader(shader) {}
+    Entity(const Model &model): model(model) {}
 
     void set_scale(float uniform_scale_factor);
     void set_scale(const glm::vec3 &scale_factors);
     void set_orientation(const glm::mat4 &orientation);
     void set_position(const glm::vec3 &vector);
 
-    void render(const Camera &camera, const Light &light);
+    const Model &get_model()const{ return model; }
+    const glm::mat4 get_mat_m()const{ return mvp; }
 
 private:
     const Model &model;
-    const Shader &shader;
 
     glm::mat4 model_scaling = glm::mat4(1.0f);
     glm::mat4 model_rotation = glm::mat4(1.0f);
