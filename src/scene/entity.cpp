@@ -7,7 +7,7 @@
 #include <glm/gtc/quaternion.hpp>
 #include <glm/gtx/quaternion.hpp>
 
-namespace scene {
+namespace mist {
 
 void Entity::set_scale(float uniform_scale_factor)
 {
@@ -44,4 +44,4 @@ void Entity::render(const Camera &camera, const Light &light)
     model.render(shader);
 }
 
-}
+} // namespace mist

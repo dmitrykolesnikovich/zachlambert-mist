@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <GLFW/glfw3.h>
 
-namespace window {
+namespace mist{
 
 FpsCounter::FpsCounter()
 {
@@ -21,4 +21,4 @@ void FpsCounter::update()
     }
 }
 
-} // namespace window
+} // namespace mist

@@ -6,7 +6,7 @@
 
 #include "data/texture.h"
 
-namespace data {
+namespace mist {
 
 class TextureManager {
 public:
@@ -17,6 +17,6 @@ private:
     std::unordered_map<std::string, Texture> textures;
 };
 
-} // namespace data
+} // namespace mist
 
 #endif

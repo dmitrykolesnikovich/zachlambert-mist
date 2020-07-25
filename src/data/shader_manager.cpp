@@ -7,7 +7,7 @@
 #include <iostream>
 #include <vector>
 
-namespace data {
+namespace mist {
 
 bool load_file_into_string(const std::string &file_path, std::string& string)
 {
@@ -123,4 +123,4 @@ const Shader &ShaderManager::get_shader(
     }
 }
 
-} // namespace data
+} // namespace mist

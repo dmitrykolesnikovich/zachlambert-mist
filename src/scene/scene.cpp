@@ -1,6 +1,6 @@
-#include "scene/world.h"
+#include "scene/scene.h"
 
-namespace scene {
+namespace mist {
 
 World::World():
     model_manager("data/models/"),
@@ -97,4 +97,4 @@ void World::render()
     }
 }
 
-}
+} // namespace mist

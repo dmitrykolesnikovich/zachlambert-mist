@@ -6,7 +6,7 @@
 #include "scene/light.h"
 #include "data/material.h"
 
-namespace data {
+namespace mist {
 
 class Shader {
 public:
@@ -15,7 +15,7 @@ public:
     void use_mat_m(const glm::mat4 &m)const;
     void use_mat_v(const glm::mat4 &v)const;
     void use_mat_mvp(const glm::mat4 &mvp)const;
-    void use_light(const scene::Light &light)const;
+    void use_light(const Light &light)const;
     void use_material(const Material &material)const;
 private:
     unsigned int program_id;
@@ -31,6 +31,6 @@ private:
     unsigned int specular_color_loc;
 };
 
-} // namespace data
+} // namespace mist
 
 #endif

@@ -2,7 +2,7 @@
 
 #include <GLFW/glfw3.h>
 
-namespace window {
+namespace mist {
 
 Clock::Clock()
 {
@@ -17,4 +17,4 @@ float Clock::sample_dt()
     return dt;
 }
 
-} // namespace window
+} // namespace mist

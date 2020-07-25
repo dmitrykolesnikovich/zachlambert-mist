@@ -6,7 +6,7 @@
 #include <glm/gtc/quaternion.hpp>
 #include <glm/gtx/quaternion.hpp>
 
-namespace scene {
+namespace mist {
 
 Camera::Camera(
         float fov_degrees,

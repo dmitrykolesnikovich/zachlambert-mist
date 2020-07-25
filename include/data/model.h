@@ -6,7 +6,7 @@
 
 #include "data/mesh.h"
 
-namespace data {
+namespace mist {
 
 class Model {
 public:
@@ -16,6 +16,6 @@ private:
     std::vector<Mesh> meshes;
 };
 
-} // namespace data
+} // namespace mist
 
 #endif

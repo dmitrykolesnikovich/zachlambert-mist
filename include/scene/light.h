@@ -3,7 +3,7 @@
 
 #include <glm/glm.hpp>
 
-namespace scene {
+namespace mist {
 
 class Light {
 public:
@@ -26,6 +26,6 @@ private:
     glm::vec3 color = glm::vec3(1.0f, 1.0f, 1.0f);
 };
 
-} // namespace scene
+} // namespace mist
 
 #endif

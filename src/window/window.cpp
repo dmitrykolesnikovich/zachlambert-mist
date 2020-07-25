@@ -9,7 +9,7 @@
 
 #include <stdio.h>
 
-namespace window {
+namespace mist {
 
 Window::Window(const std::string &name, unsigned int width, unsigned int height):
     name(name), width(width), height(height), window(NULL) {}
@@ -47,4 +47,4 @@ bool Window::initialise()
     return true;
 }
 
-} // namespace window
+} // namespace mist

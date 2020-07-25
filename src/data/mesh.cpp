@@ -2,7 +2,7 @@
 #include <iostream>
 #include <stdio.h>
 
-namespace data {
+namespace mist {
 
 Vertex::Vertex(glm::vec3 position, glm::vec2 tex_coords, glm::vec3 normal)
 {
@@ -78,4 +78,4 @@ void Mesh::render(const Shader &shader)const
     glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_SHORT, 0);
 }
 
-} // namespace data
+} // namespace mist

@@ -32,7 +32,7 @@
 #include "data/material.h"
 #include "data/mesh.h"
 
-namespace render {
+namespace mist {
 
 struct RenderObject {
     const unsigned int VAO;
@@ -45,15 +45,15 @@ class Renderer {
 public:
     Renderer() {}
     void render();
-    void load_render_object(const data::Material *material, const data::Mesh* mesh, const glm::mat4 *mat_model);
-    void set_camera(scene::Camera *camera){ this->camera = camera; }
-    void set_light(scene::Light *light){ this->light = light; }
+    void load_render_object(const Material *material, const Mesh* mesh, const glm::mat4 *mat_model);
+    void set_camera(Camera *camera){ this->camera = camera; }
+    void set_light(Light *light){ this->light = light; }
 private:
-    std::map<data::Shader*, std::map<data::Material*, std::list<RenderObject>>> render_objects;
-    const scene::Camera *camera;
-    const scene::Light *light;
+    std::map<Shader*, std::map<Material*, std::list<RenderObject>>> render_objects;
+    const Camera *camera;
+    const Light *light;
 };
 
-} // namespace render
+} // namespace mist
 
 #endif

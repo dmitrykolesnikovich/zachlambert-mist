@@ -5,7 +5,7 @@
 #include <GLFW/glfw3.h>
 #include <string>
 
-namespace window {
+namespace mist {
 
 class Window {
 public:
@@ -21,6 +21,6 @@ private:
     GLFWwindow *window;
 };
 
-} // namespace window
+} // namespace mist
 
 #endif

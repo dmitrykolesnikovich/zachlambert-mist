@@ -6,7 +6,7 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
-namespace data {
+namespace mist {
 
 unsigned int load_texture(const std::string &texture_path)
 {
@@ -70,4 +70,4 @@ const Texture &TextureManager::get_texture(const std::string &relative_path)
     }
 }
 
-} // namespace data
+} // namespace mist

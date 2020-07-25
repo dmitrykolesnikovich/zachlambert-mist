@@ -1,7 +1,7 @@
 #ifndef CLOCK_H
 #define CLOCK_H
 
-namespace window {
+namespace mist {
 
 class Clock {
 public:
@@ -11,6 +11,6 @@ private:
     float dt, prev_time, current_time;
 };
 
-} // namespace window
+} // namespace mist
 
 #endif

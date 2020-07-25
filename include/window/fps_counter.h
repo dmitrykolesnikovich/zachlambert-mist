@@ -1,7 +1,7 @@
 #ifndef FPS_COUNTER_H
 #define FPS_COUNTER_H
 
-namespace window {
+namespace mist {
 
 class FpsCounter {
 public:
@@ -13,6 +13,6 @@ private:
     int num_frames = 0;
 };
 
-} // namespace window
+} // namespace mist
 
 #endif

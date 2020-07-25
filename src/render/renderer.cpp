@@ -1,6 +1,6 @@
 #include "render/renderer.h"
 
-namespace render {
+namespace mist {
 
 void Renderer::render()
 {
@@ -23,9 +23,9 @@ void Renderer::render()
     }
 }
 
-void Renderer::load_render_object(const data::Material *material, const data::Mesh* mesh, const glm::mat4 *mat_model)
+void Renderer::load_render_object(const Material *material, const Mesh* mesh, const glm::mat4 *mat_model)
 {
 
 }
 
-} // namespace render
+} // namespace mist

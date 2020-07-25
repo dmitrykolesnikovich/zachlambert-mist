@@ -11,11 +11,11 @@
 #include "data/texture.h"
 #include "scene/camera.h"
 
-namespace scene {
+namespace mist {
 
 class Entity {
 public:
-    Entity(const data::Model &model, const data::Shader &shader):
+    Entity(const Model &model, const Shader &shader):
         model(model), shader(shader) {}
 
     void set_scale(float uniform_scale_factor);
@@ -26,8 +26,8 @@ public:
     void render(const Camera &camera, const Light &light);
 
 private:
-    const data::Model &model;
-    const data::Shader &shader;
+    const Model &model;
+    const Shader &shader;
 
     glm::mat4 model_scaling = glm::mat4(1.0f);
     glm::mat4 model_rotation = glm::mat4(1.0f);
@@ -36,6 +36,6 @@ private:
     glm::mat4 mvp;
 };
 
-} // namespace scene
+} // namespace mist
 
 #endif

@@ -6,7 +6,7 @@
 
 #include "data/shader.h"
 
-namespace data {
+namespace mist {
 
 class ShaderManager {
 public:
@@ -19,6 +19,6 @@ private:
     std::unordered_map<std::string, Shader> shaders;
 };
 
-} // namespace data
+} // namespace mist
 
 #endif

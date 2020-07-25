@@ -2,7 +2,7 @@
 
 #include <GL/glew.h>
 
-namespace data {
+namespace mist {
 
 Shader::Shader(unsigned int program_id):program_id(program_id)
 {
@@ -53,7 +53,7 @@ void Shader::use_mat_mvp(const glm::mat4 &mvp)const
     glUniformMatrix4fv(mvp_loc, 1, GL_FALSE, &mvp[0][0]);
 }
 
-void Shader::use_light(const scene::Light &light)const
+void Shader::use_light(const Light &light)const
 {
     glUniform3f(
         light_pos_loc,
@@ -99,4 +99,4 @@ void Shader::use_material(const Material &material)const
     }
 }
 
-} // namespace data
+} // namespace mist

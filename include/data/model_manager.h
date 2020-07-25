@@ -7,7 +7,7 @@
 #include "data/model.h"
 #include "data/texture_manager.h"
 
-namespace data {
+namespace mist {
 
 class ModelManager {
 public:
@@ -18,6 +18,6 @@ private:
     std::unordered_map<std::string, Model> models;
 };
 
-} // namespace data
+} // namespace mist
 
 #endif

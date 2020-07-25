@@ -4,7 +4,7 @@
 
 #include <glm/glm.hpp>
 
-namespace data {
+namespace mist {
 
 void Model::render(const Shader &shader)const
 {
@@ -15,4 +15,4 @@ void Model::render(const Shader &shader)const
     }
 }
 
-} // namespace data
+} // namespace mist

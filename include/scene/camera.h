@@ -8,7 +8,7 @@
  *
  */
 
-namespace scene {
+namespace mist {
 
 class Camera{
 public:
@@ -53,6 +53,6 @@ private:
     const float TILT_LIMIT = glm::radians(85.0f);
 };
 
-} // namespace scene
+} // namespace mist
 
 #endif

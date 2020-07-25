@@ -9,24 +9,24 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/transform.hpp>
 
-#include "scene/world.h"
+#include "scene/scene.h"
 #include "window/window.h"
 #include "window/fps_counter.h"
 #include "window/clock.h"
 
 int main()
 {
-    window::Window window("Simple", 1024, 768);
+    mist::Window window("Simple", 1024, 768);
     if (!window.initialise()) {
         return 1;
     }
 
-    scene::World world;
+    mist::World world;
 
-    window::Clock clock;
+    mist::Clock clock;
     float dt;
     #ifndef NDEBUG
-    window::FpsCounter fps_counter;
+    mist::FpsCounter fps_counter;
     #endif
 
     do {

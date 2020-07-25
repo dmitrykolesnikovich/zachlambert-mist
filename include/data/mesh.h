@@ -10,7 +10,7 @@
 #include "data/texture.h"
 #include "data/material.h"
 
-namespace data {
+namespace mist {
 
 struct Vertex {
     glm::vec<3, GLfloat> position; // 3*4 = 12 bytes
