@@ -20,6 +20,9 @@ public:
     Light *find_light(std::string name);
     void set_camera(Camera camera){ this->camera = camera; }
     Camera &get_camera() { return camera; }
+    const Camera &get_camera()const { return camera; }
+    const std::unordered_map<std::string, Entity> &get_entities()const{ return entities; }
+    const std::unordered_map<std::string, Light> &get_lights()const{ return lights; }
 private:
     Camera camera;
     std::unordered_map<std::string, Entity> entities;

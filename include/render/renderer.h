@@ -41,12 +41,8 @@ namespace mist {
 class Renderer {
 public:
     Renderer() {}
+    void initialise();
     void render(const Scene &scene, const Resources &resources);
-    void set_camera(Camera *camera){ this->camera = camera; }
-    void set_light(Light *light){ this->light = light; }
-private:
-    const Camera *camera;
-    const Light *light;
 };
 
 } // namespace mist
