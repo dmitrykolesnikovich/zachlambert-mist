@@ -32,17 +32,35 @@
 #include "data/material.h"
 #include "data/mesh.h"
 #include "scene/entity.h"
-#include "data/resources.h"
+#include "data/resource_config.h"
 #include "scene/scene.h"
 
 namespace mist {
 
-
 class Renderer {
 public:
-    Renderer() {}
+    Renderer(std::string base_dir = "data"):base_dir(base_dir) {}
     void initialise();
-    void render(const Scene &scene, const Resources &resources);
+    void render(const Scene &scene);
+
+    bool create_model_from_file(
+        const std::string &name,
+        const std::string &relative_path
+    );
+    bool create_model_from_config(
+        const std::string &name,
+        const ModelConfig &config
+    );
+    bool create_material_from_config(
+        const std::string &name,
+        const MaterialConfig &config
+    );
+private:
+    std::string base_dir;
+    std::unordered_map<std::string, Shader> shaders;
+    std::unordered_map<std::string, Material> materials;
+    std::unordered_map<std::string, Texture> textures;
+    std::unordered_map<std::string, Model> models;
 };
 
 } // namespace mist

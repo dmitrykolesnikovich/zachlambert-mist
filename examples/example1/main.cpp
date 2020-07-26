@@ -65,20 +65,20 @@ int main()
         return 1;
     }
 
-    mist::Resources resources;
+    mist::Renderer renderer;
 
-    resources.create_model_from_file("box", "models/box/box.obj");
+    renderer.create_model_from_file("box", "models/box/box.obj");
 
     mist::MaterialConfig matte_red;
     matte_red.set_diffuse_color(1, 0, 0);
     matte_red.set_specular_color(0.5f, 0.5f, 0.5f);
-    resources.create_material_from_config("matte red", matte_red);
+    renderer.create_material_from_config("matte red", matte_red);
 
     mist::ModelConfig my_sphere_config;
     my_sphere_config.set_type(mist::ModelType::SPHERE);
     my_sphere_config.set_dimension("radius", 2);
     my_sphere_config.set_material("matte red");
-    resources.create_model_from_config("my_sphere", my_sphere_config);
+    renderer.create_model_from_config("my_sphere", my_sphere_config);
 
     mist::Entity box;
     box.set_model("box");
@@ -100,8 +100,6 @@ int main()
     mist::Camera &camera = scene.get_camera();
     camera.set_position(glm::vec3(0.0f, 0.0f, 5.0f));
 
-    mist::Renderer renderer;
-
     mist::Clock clock;
 
     while (window.is_running()) {
@@ -111,7 +109,7 @@ int main()
         // editing camera, changing entity models, etc.
         // On changing properties, a dirty flag is set within the object
         // telling the renderer to recompute any necessary information
-        renderer.render(scene, resources);
+        renderer.render(scene);
 
         window.update();
     }

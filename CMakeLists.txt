@@ -12,7 +12,6 @@ set(SRC
     src/data/mesh.cpp
     src/data/model.cpp
     src/data/resource_config.cpp
-    src/data/resources.cpp
     # src/data/shader.cpp
     # src/data/shader_manager.cpp
     # src/data/texture_manager.cpp
@@ -31,7 +30,7 @@ set(SRC
 add_library(mist STATIC ${SRC})
 
 target_include_directories(mist
-    PRIVATE src/data_utils
+    PRIVATE src
     PUBLIC include
 )
 
