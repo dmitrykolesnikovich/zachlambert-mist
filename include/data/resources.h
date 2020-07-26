@@ -10,33 +10,9 @@
 #include "data/model.h"
 #include "data/texture.h"
 #include "data/material.h"
+#include "data/resource_config.h"
 
 namespace mist {
-
-enum class ModelType {
-    SPHERE,
-    BOX
-};
-
-class ModelConfig {
-public:
-    void set_type(ModelType type);
-    void set_dimension(std::string name, float value);
-    void set_material(std::string material);
-private:
-    ModelType type;
-    std::unordered_map<std::string, float> dimensions;
-    std::string material;    
-};
-
-class MaterialConfig {
-public:
-    void set_color(float r, float g, float b);
-    void set_specularity(float specularity);
-private:
-    glm::vec3 color;
-    float specularity;
-};
 
 class Resources {
 public:
