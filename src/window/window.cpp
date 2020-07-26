@@ -47,4 +47,10 @@ bool Window::initialise()
     return true;
 }
 
+bool Window::is_running()
+{
+    return glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS
+        && !glfwWindowShouldClose(window);
+}
+
 } // namespace mist

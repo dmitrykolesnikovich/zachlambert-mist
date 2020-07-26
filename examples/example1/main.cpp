@@ -61,8 +61,7 @@ void handle_input()
 int main()
 {
     mist::Window window; // Sensible defaults
-    window.set_size(1024, 768); // Can edit attributes afterwards
-    if (!window.create()) {
+    if (!window.initialise()) {
         return 1;
     }
 

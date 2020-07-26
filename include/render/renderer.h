@@ -42,11 +42,9 @@ class Renderer {
 public:
     Renderer() {}
     void render(const Scene &scene, const Resources &resources);
-    void add_entity(const Entity& entity);
     void set_camera(Camera *camera){ this->camera = camera; }
     void set_light(Light *light){ this->light = light; }
 private:
-    std::list<const Entity&> entities;
     const Camera *camera;
     const Light *light;
 };

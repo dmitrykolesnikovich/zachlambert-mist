@@ -50,7 +50,7 @@ private:
     glm::mat4 view;
     glm::mat4 projection;
     bool update_position, update_directions;
-    const float TILT_LIMIT = glm::radians(85.0f);
+    static constexpr float TILT_LIMIT = glm::radians(85.0f);
 };
 
 } // namespace mist

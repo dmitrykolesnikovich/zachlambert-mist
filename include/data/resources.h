@@ -20,7 +20,7 @@ public:
 
     bool create_model_from_file(const std::string &name, const std::string &relative_path);
     bool create_model_from_config(const std::string &name, const ModelConfig &config);
-    bool create_material_config(const std::string &name, const MaterialConfig &config);
+    bool create_material_from_config(const std::string &name, const MaterialConfig &config);
 private:
     std::string base_dir;
     std::unordered_map<std::string, Shader> shaders;
