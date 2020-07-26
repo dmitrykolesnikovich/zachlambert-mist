@@ -1,33 +1,32 @@
 #ifndef WORLD_H
 #define WORLD_H
 
+#include <string>
+#include <unordered_map>
+
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
-#include "data/model_manager.h"
-#include "data/texture_manager.h"
-#include "data/shader_manager.h"
 #include "scene/entity.h"
 #include "scene/camera.h"
 
 namespace mist {
 
-class Scene {
+struct Scene {
 public:
-    Scene();
-    ~Scene() {}
-    void handle_input(GLFWwindow *window, const int WIDTH, const int HEIGHT);
-    void update(float dt);
-    void render();
+    bool add_entity(std::string name, Entity entity);
+    Entity *find_entity(std::string name);
+    bool add_light(std::string name, Light light);
+    Light *find_light(std::string name);
+    void set_camera(Camera camera){ this->camera = camera; }
+    Camera &get_camera() { return camera; }
 private:
-    ModelManager model_manager;
-    TextureManager texture_manager;
-    ShaderManager shader_manager;
     Camera camera;
-    std::vector<Entity> entities;
-    Light light;
+    std::unordered_map<std::string, Entity> entities;
+    std::unordered_map<std::string, Light> lights;
+friend class Renderer;
 };
 
-} // namespace mist
+}; // namespace mist
 
 #endif

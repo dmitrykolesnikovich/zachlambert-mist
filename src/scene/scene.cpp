@@ -2,36 +2,37 @@
 
 namespace mist {
 
-Scene::Scene():
-    model_manager("data/models/"),
-    texture_manager("data/textures/"),
-    shader_manager("data/shaders/")
+bool Scene::add_entity(std::string name, Entity entity)
 {
+    return entities.insert(
+        std::make_pair<std::string, Entity>(name, entity)->second;
 }
 
-void Scene::handle_input(GLFWwindow *window, const int WIDTH, const int HEIGHT)
+Entity *Scene::find_entity(std::string name)
 {
-}
-
-void Scene::update(float dt)
-{
-    camera.update(dt);
-    for(std::vector<Entity>::iterator it = entities.begin();
-        it != entities.end();
-        it++)
-    {
-        // it->update(dt);
+    std::unordered_map<std::string, Entity>::iterator search
+        = entities.find(name);
+    if (search != entities.end()) {
+        return search;
+    } else {
+        return nullptr;
     }
-
 }
 
-void Scene::render()
+void Scene::add_light(std::string name, Light light)
 {
-    for(std::vector<Entity>::iterator it = entities.begin();
-        it != entities.end();
-        it++)
-    {
-        it->render(camera, light);
+    return entities.insert(
+        std::make_pair<std::string, Entity)(name, entity)->second;
+}
+
+Light *Scene::find_light(std::string name)
+{
+    std::unordered_map<std::string, Light>::iterator search
+        = lights.find(name);
+    if (search != lights.end()) {
+        return search;
+    } else {
+        return nullptr;
     }
 }
 

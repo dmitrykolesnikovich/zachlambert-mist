@@ -26,6 +26,9 @@
 
 #include <glm/glm.hpp>
 
+#include "data/model_manager.h"
+#include "data/texture_manager.h"
+#include "data/shader_manager.h"
 #include "data/shader.h"
 #include "scene/camera.h"
 #include "scene/light.h"
@@ -40,13 +43,20 @@ class Renderer {
 public:
     Renderer() {}
     void render();
-    void load_render_object(const Material *material, const Mesh* mesh, const glm::mat4 *mat_model);
+    void add_entity(const Entity& entity);
     void set_camera(Camera *camera){ this->camera = camera; }
     void set_light(Light *light){ this->light = light; }
+
 private:
-    std::list<Entity*> entities;
+    void render_model(const glm::mat4 &mat_m, const Model &model);
+
+    std::list<const Entity&> entities;
     const Camera *camera;
     const Light *light;
+
+    ModelManager model_manager;
+    TextureManager texture_manager;
+    ShaderManager shader_manager;
 };
 
 } // namespace mist

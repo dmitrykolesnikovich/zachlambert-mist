@@ -2,13 +2,21 @@
 
 namespace mist {
 
+void Renderer::render_model(const glm::mat4 &mat_m, const Model &model)
+{
+    for (std::size_t i = 0; i < model.meshes.size()) {
+        glUseProgram(model.meshes[i].get_shader_id);
+        model.meshes[i].shader.use_program();
+    }
+}
+
 void Renderer::render()
 {
     glm::mat4 mvp;
     for (std::list<Entity*>::const_iterator it = entities.cbegin();
         it != entities.cend(); it++)
     {
-        (*it)->get_shader().use_program();
+        it->get_material().get_shader().use_program();
         if (light)
         j   (*it)->get_shader().use_light(*light);
         (*it)->get_shader().use_material((*it)->get_material());
@@ -20,9 +28,9 @@ void Renderer::render()
     }
 }
 
-void Renderer::load_render_object(const Material *material, const Mesh* mesh, const glm::mat4 *mat_model)
+void Renderer::add_entity(const Entity& entity)
 {
-
+    entities.push_back(entity);
 }
 
 } // namespace mist
