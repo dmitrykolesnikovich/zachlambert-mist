@@ -27,7 +27,7 @@ bool Resources::create_model_from_config(const std::string &name, const ModelCon
     }
 }
 
-bool Resources::create_material_config(const std::string &name, const MaterialConfig &config)
+bool Resources::create_material_from_config(const std::string &name, const MaterialConfig &config)
 {
     if (materials.find(name) != materials.end()) {
         Material material = create_material(config);

@@ -9,7 +9,11 @@ namespace mist {
 
 class Window {
 public:
-    Window(const std::string &name, unsigned int width, unsigned int height);
+    Window(
+        const std::string &name = "Mist",
+        unsigned int width = 720,
+        unsigned int height = 480
+    );
     bool initialise();
     unsigned int get_width() { return width; }
     unsigned int get_height() { return height; }

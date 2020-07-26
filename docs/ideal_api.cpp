@@ -14,7 +14,7 @@ int main()
     resources.create_model_from_file("frog", "animals/frog.obj");
 
     MaterialConfig matte_red;
-    my_material_config.set_color(1, 0, 0);
+    matte_red.set_color(1, 0, 0);
     resources.create_material_from_config("matte red", matte_red);
 
     // Can also create from texture, etc
@@ -26,8 +26,6 @@ int main()
     my_sphere_config.set_material("matte red");
     resources.create_model_from_config("my_sphere", my_sphere_config);
 
-    Scene scene;
-
     Entity frog;
     frog.set_model("frog");
     frog.set_orientation(...);
@@ -35,7 +33,6 @@ int main()
     Entity sphere;
     sphere.set_model("my_sphere");
     sphere.set_position(...);
-    scene.add_entity("sphere", sphere);
 
     Scene scene;
     scene.add_entity("frog", frog);
@@ -48,12 +45,11 @@ int main()
     Light light;
     light.set_position(...);
     light.set_color(...);
-    light.set_intensity(...);
+    light.set_power(...);
     scene.add_light(light);
 
-    Camera camera;
-    ...
-    scene.set_camera(camera);
+    Camera &camera = scene.get_camera();
+    camera.set_position(0.0f, 0.0f, 5.0f);
 
     Renderer renderer;
 
@@ -61,11 +57,7 @@ int main()
 
     while (window.is_running()) {
         float dt = clock.tick();
-        // update game logic
-        // includes addition/insertion of entities, lights,
-        // editing camera, changing entity models, etc.
-        // On changing properties, a dirty flag is set within the object
-        // telling the renderer to recompute any necessary information
+        // game logic
         renderer.render(resources, scene);
     }
 

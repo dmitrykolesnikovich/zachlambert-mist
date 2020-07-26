@@ -13,6 +13,8 @@
 #include "window/window.h"
 #include "window/fps_counter.h"
 #include "window/clock.h"
+#include "data/resource_config.h"
+#include "render/renderer.h"
 
 /*
 void handle_input()
@@ -58,67 +60,59 @@ void handle_input()
 
 int main()
 {
-    mist::Window window("Simple", 1024, 768);
-    if (!window.initialise()) {
+    mist::Window window; // Sensible defaults
+    window.set_size(1024, 768); // Can edit attributes afterwards
+    if (!window.create()) {
         return 1;
     }
 
+    mist::Resources resources;
+
+    resources.create_model_from_file("box", "models/box/box.obj");
+
+    mist::MaterialConfig matte_red;
+    matte_red.set_diffuse_color(1, 0, 0);
+    matte_red.set_specular_color(0.5f, 0.5f, 0.5f);
+    resources.create_material_from_config("matte red", matte_red);
+
+    mist::ModelConfig my_sphere_config;
+    my_sphere_config.set_type(mist::ModelType::SPHERE);
+    my_sphere_config.set_dimension("radius", 2);
+    my_sphere_config.set_material("matte red");
+    resources.create_model_from_config("my_sphere", my_sphere_config);
+
+    mist::Entity box;
+    box.set_model("box");
+    box.set_orientation(glm::rotate(glm::radians(45.0f), glm::vec3(0.0f, 1.0f, 0.0f)));
+
+    mist::Entity sphere;
+    sphere.set_model("my_sphere");
+
     mist::Scene scene;
+    scene.add_entity("box", box);
+    scene.add_entity("sphere", sphere);
 
-    /*
-    entities.push_back(Entity(
-        model_manager.get_model(texture_manager, "box/box.obj"),
-        shader_manager.get_shader("default.vs", "default.fs")
-    ));
+    mist::Light light;
+    light.set_position(glm::vec3(1.0f, 6.0f, 1.0f));
+    light.set_color(1, 1, 1);
+    light.set_power(10);
+    scene.add_light("main light", light);
 
-    entities.push_back(Entity(
-        model_manager.get_model(texture_manager, "sword/sword.obj"),
-        shader_manager.get_shader("default.vs", "default.fs")
-    ));
-    entities[1].set_position(glm::vec3(4.0f, 0.0f, 0.0f));
+    mist::Camera &camera = scene.get_camera();
+    camera.set_position(glm::vec3(0.0f, 0.0f, 5.0f));
 
-    entities.push_back(Entity(
-        model_manager.get_model(texture_manager, "golem/golem.obj"),
-        shader_manager.get_shader("default.vs", "default.fs")
-    ));
-    entities[2].set_position(glm::vec3(-4.0f, 0.0f, 0.0f));
-
-    entities.push_back(Entity(
-        model_manager.get_model(texture_manager, "tree/tree.obj"),
-        shader_manager.get_shader("default.vs", "default.fs")
-    ));
-    entities[3].set_position(glm::vec3(0.0f, 0.0f, 4.0f));
-
-    light.set_position(glm::vec3(-5.0f, 5.0f, 5.0f));
-    light.set_power(20.0f);
-    light.set_color(glm::vec3(1.0f, 1.0f, 1.0f));
+    mist::Renderer renderer;
 
     mist::Clock clock;
-    float dt;
-    #ifndef NDEBUG
-    mist::FpsCounter fps_counter;
-    #endif
 
-    do {
-        #ifndef NDEBUG
-        fps_counter.update();
-        #endif
-        dt = clock.sample_dt();
-
-        glClearColor(0.3f, 0.3f, 0.3f, 0.0f);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-        world.handle_input(window.get_window(), window.get_width(), window.get_height());
-        world.update(dt);
-        world.render();
-
-        glfwSwapBuffers(window.get_window());
-        glfwPollEvents();
-    } while (
-        glfwGetKey(window.get_window(), GLFW_KEY_ESCAPE) != GLFW_PRESS
-        && glfwWindowShouldClose(window.get_window()) == 0
-    );
-    */
-
+    while (window.is_running()) {
+        float dt = clock.sample_dt();
+        // update game logic
+        // includes addition/insertion of entities, lights,
+        // editing camera, changing entity models, etc.
+        // On changing properties, a dirty flag is set within the object
+        // telling the renderer to recompute any necessary information
+        renderer.render(scene, resources);
+    }
     return 0;
 }

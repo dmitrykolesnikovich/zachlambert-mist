@@ -16,8 +16,8 @@ public:
         this->power = power;
     }
     float get_power() const { return power; }
-    void set_color(const glm::vec3 &color){
-        this->color = color;
+    void set_color(float r, float g, float b) {
+        color = glm::vec3(r, g, b);
     }
     const glm::vec3 &get_color() const { return color; }
 private:
