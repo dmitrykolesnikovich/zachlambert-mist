@@ -19,7 +19,7 @@ void ModelConfig::set_material(std::string material)
     this->material = material;
 }
 
-float ModelConfig::get_dimension(const std::string &name, float default_value)
+float ModelConfig::get_dimension(const std::string &name, float default_value)const
 {
     std::unordered_map<std::string, float>::const_iterator search
         = dimensions.find(name);

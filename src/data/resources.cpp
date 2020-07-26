@@ -5,7 +5,7 @@
 
 namespace mist {
 
-bool Resources::create_model_from_file(std::string name, std::string relative_path)
+bool Resources::create_model_from_file(const std::string &name, const std::string &relative_path)
 {
     if (models.find(name) != models.end()) {
         Model model = load_model(base_dir + relative_path);
@@ -16,7 +16,7 @@ bool Resources::create_model_from_file(std::string name, std::string relative_pa
     }
 }
 
-bool Resources::create_model_from_config(std::string name, ModelConfig config)
+bool Resources::create_model_from_config(const std::string &name, const ModelConfig &config)
 {
     if (models.find(name) != models.end()) {
         Model model = create_model(config);
@@ -27,7 +27,7 @@ bool Resources::create_model_from_config(std::string name, ModelConfig config)
     }
 }
 
-bool Resources::create_material_config(std::string name, MaterialConfig config)
+bool Resources::create_material_config(const std::string &name, const MaterialConfig &config)
 {
     if (materials.find(name) != materials.end()) {
         Material material = create_material(config);

@@ -32,13 +32,11 @@ class Mesh {
 public:
     Mesh(
         const std::vector<Vertex> &vertices,
-        const std::vector<unsigned short> &indices,
-        const Material &material);
+        const std::vector<unsigned short> &indices);
     void render(const Shader &shader)const;
     // Raw mesh data
     std::vector<Vertex> vertices;
     std::vector<unsigned short> indices;
-    Material material;
 private:
     // Render data
     unsigned int VAO, VBO, EBO;

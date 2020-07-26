@@ -3,7 +3,7 @@
 
 namespace mist {
 
-Material create_material(MaterialConfig config)
+Material create_material(const MaterialConfig &config)
 {
     Material material;
     material.type = MaterialType::COLORED;

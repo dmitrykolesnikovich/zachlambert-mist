@@ -18,9 +18,9 @@ class Resources {
 public:
     Resources(std::string base_dir = "data"):base_dir(base_dir) {}
 
-    bool create_model_from_file(std::string name, std::string relative_path);
-    bool create_model_from_config(std::string name, ModelConfig config);
-    bool create_material_config(std::string name, MaterialConfig config);
+    bool create_model_from_file(const std::string &name, const std::string &relative_path);
+    bool create_model_from_config(const std::string &name, const ModelConfig &config);
+    bool create_material_config(const std::string &name, const MaterialConfig &config);
 private:
     std::string base_dir;
     std::unordered_map<std::string, Shader> shaders;

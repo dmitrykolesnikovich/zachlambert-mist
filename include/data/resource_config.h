@@ -19,7 +19,7 @@ public:
     void set_dimension(std::string name, float value);
     void set_material(std::string material);
     const ModelType get_type()const{ return type; }
-    float get_dimension(const std::string &name, float default_value);
+    float get_dimension(const std::string &name, float default_value)const;
     const std::string &get_material()const{ return material; }
 private:
     ModelType type;

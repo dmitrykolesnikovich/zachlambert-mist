@@ -6,13 +6,10 @@
 
 namespace mist {
 
-void Model::render(const Shader &shader)const
+void Model::append_mesh(Mesh mesh, const std::string &material)
 {
-    for (std::vector<Mesh>::const_iterator it = meshes.begin();
-        it != meshes.end(); it++)
-    {
-        it->render(shader);
-    }
+    meshes.push_back(mesh);
+    materials.push_back(material);
 }
 
 } // namespace mist

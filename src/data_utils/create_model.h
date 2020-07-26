@@ -6,7 +6,7 @@
 
 namespace mist {
 
-Model create_model(ModelConfig config);
+Model create_model(const ModelConfig &config);
 
 } // namespace mist
 

@@ -21,10 +21,10 @@ Vertex::Vertex(glm::vec3 position, glm::vec2 tex_coords, glm::vec3 normal)
 }
 
 Mesh::Mesh(
-        const std::vector<Vertex> &vertices_in,
-        const std::vector<unsigned short> &indices_in, const Material &material_in): vertices(vertices_in),
-    indices(indices_in),
-    material(material_in)
+        const std::vector<Vertex> &vertices,
+        const std::vector<unsigned short> &indices):
+    vertices(vertices),
+    indices(indices)
 {
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
