@@ -1,34 +1,9 @@
 #include "data/resources.h"
+#include "data_utils/create_model.h"
+#include "data_utils/load_model.h"
+#include "data_utils/create_material.h"
 
 namespace mist {
-
-void ModelConfig::set_type(ModelType type)
-{
-    this->type = type;
-}
-
-void ModelConfig::set_dimension(std::string name, float value)
-{
-    // Overwrite if already present
-    dimensions[name] = value;
-}
-
-void ModelConfig::set_material(std::string material)
-{
-    this->material = material;
-}
-
-
-void MaterialConfig::set_color(float r, float g, float b)
-{
-    color = glm::vec3(r, g, b);
-}
-
-void MaterialConfig::set_specularity(float specularity)
-{
-    this->specularity = specularity;
-}
-
 
 bool Resources::create_model_from_file(std::string name, std::string relative_path)
 {

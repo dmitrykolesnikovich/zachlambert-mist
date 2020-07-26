@@ -27,11 +27,7 @@ set(SRC
 add_library(mist ${SRC})
 
 target_include_directories(mist
-    PRIVATE
-        src/render
-        src/scene
-        src/window
-        src/resources
+    PRIVATE src
     PUBLIC include
 )
 
