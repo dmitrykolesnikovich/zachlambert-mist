@@ -40,4 +40,4 @@ target_include_directories(stb INTERFACE /opt/stb)
 
 target_link_libraries(mist PUBLIC GL glfw GLEW assimp stb)
 
-# add_subdirectory(examples)
+add_subdirectory(examples)

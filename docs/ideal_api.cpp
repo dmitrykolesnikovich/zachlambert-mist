@@ -9,16 +9,22 @@ int main()
     window.create(); // May need, dependent on how the window is implemented
 
 
-    ModelManager model_manager;
+    Resources resources;
 
-    model_manager.create_model_from_file("frog", "animals/frog.obj");
+    resources.create_model_from_file("frog", "animals/frog.obj");
+
+    MaterialConfig matte_red;
+    my_material_config.set_color(1, 0, 0);
+    resources.create_material_from_config("matte red", matte_red);
+
+    // Can also create from texture, etc
+    // ie: Anything which may be defined in a .mtl file
 
     ModelConfig my_sphere_config;
     my_sphere_config.set_type(ModelType::SPHERE);
-    my_sphere_config.set_attribute("radius", 10); // Only applicable for certain types
-    my_sphere_config.set_material("matte");
-    my_sphere_config.set_color("red"); // Only applicable for certain materials
-    model_manager.create_model_from_config("my_sphere", my_sphere_config);
+    my_sphere_config.set_dimension("radius", 10); // Only applicable for certain types
+    my_sphere_config.set_material("matte red");
+    resources.create_model_from_config("my_sphere", my_sphere_config);
 
     Scene scene;
 
@@ -60,7 +66,7 @@ int main()
         // editing camera, changing entity models, etc.
         // On changing properties, a dirty flag is set within the object
         // telling the renderer to recompute any necessary information
-        renderer.render(model_manager, scene);
+        renderer.render(resources, scene);
     }
 
     return 0;

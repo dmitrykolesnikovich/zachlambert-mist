@@ -14,6 +14,7 @@
 #include "window/fps_counter.h"
 #include "window/clock.h"
 
+/*
 void handle_input()
 {
     const static float mouse_speed = 0.08f;
@@ -53,6 +54,7 @@ void handle_input()
     camera.set_pan_velocity(pan_velocity);
     camera.set_tilt_velocity(tilt_velocity);
 }
+*/
 
 int main()
 {
@@ -63,6 +65,7 @@ int main()
 
     mist::Scene scene;
 
+    /*
     entities.push_back(Entity(
         model_manager.get_model(texture_manager, "box/box.obj"),
         shader_manager.get_shader("default.vs", "default.fs")
@@ -115,6 +118,7 @@ int main()
         glfwGetKey(window.get_window(), GLFW_KEY_ESCAPE) != GLFW_PRESS
         && glfwWindowShouldClose(window.get_window()) == 0
     );
+    */
 
     return 0;
 }
