@@ -11,7 +11,11 @@
 
 namespace mist {
 
-void process_mesh(TextureManager &texture_manager, std::vector<Mesh> &meshes, const aiScene *scene, aiMesh *mesh)
+void process_mesh(
+    const aiScene *scene,
+    aiMesh *mesh,
+    std::vector<Mesh> &meshes_out,
+    std::vector<Material> &materials_out)
 {
     std::cout << "Processing mesh" << std::endl;
     // Process vertices
@@ -53,61 +57,58 @@ void process_mesh(TextureManager &texture_manager, std::vector<Mesh> &meshes, co
     }
 
     std::cout << "Processing material" << std::endl;
-
     // Process material
-    const Texture *diffuse_texture = 0;
-    glm::vec3 diffuse_color;
-    const Texture *specular_texture = 0;
-    glm::vec3 specular_color;
+    Material material;
     if (mesh->mMaterialIndex >= 0) {
         aiMaterial *ai_material = scene->mMaterials[mesh->mMaterialIndex];
 
         if (ai_material->GetTextureCount(aiTextureType_DIFFUSE) > 0) {
             aiString relative_path;
             ai_material->GetTexture(aiTextureType_DIFFUSE, 0, &relative_path);
-            diffuse_texture = &texture_manager.get_texture(relative_path.C_Str());
+            material.diffuse_texture = relative_path.C_Str();
         }
 
         aiColor3D ai_diffuse_color(0.0f, 0.0f, 0.0f);
         ai_material->Get(AI_MATKEY_COLOR_DIFFUSE, ai_diffuse_color);
-        diffuse_color = glm::vec3(
+        material.diffuse_color = glm::vec3(
             ai_diffuse_color.r, ai_diffuse_color.g, ai_diffuse_color.b
         );
 
         if (ai_material->GetTextureCount(aiTextureType_SPECULAR) > 0) {
             aiString relative_path;
             ai_material->GetTexture(aiTextureType_SPECULAR, 0, &relative_path);
-            specular_texture = &texture_manager.get_texture(relative_path.C_Str());
+            material.specular_texture = relative_path.C_Str();
         }
 
         aiColor3D ai_specular_color(0.0f, 0.0f, 0.0f);
         ai_material->Get(AI_MATKEY_COLOR_SPECULAR, ai_specular_color);
-        specular_color = glm::vec3(
+        material.specular_color = glm::vec3(
             ai_specular_color.r, ai_specular_color.g, ai_specular_color.b
         );
     }
-    Material material = {
-        diffuse_texture, diffuse_color, specular_texture, specular_color
-    };
-
-    meshes.push_back(Mesh(vertices, indices, material));
+    meshes_out.push_back(Mesh(vertices, indices));
+    materials_out.push_back(material);
 }
 
 
-void process_node(TextureManager &texture_manager, std::vector<Mesh> &meshes, const aiScene *scene, aiNode *node)
+void process_node(
+    const aiScene *scene,
+    aiNode *node,
+    std::vector<Mesh> &meshes_out,
+    std::vector<Material> &materials_out)
 {
     for (std::size_t i = 0; i < node->mNumMeshes; i++) {
         aiMesh *mesh = scene->mMeshes[node->mMeshes[i]];
-        process_mesh(texture_manager, meshes, scene, mesh);
+        process_mesh(scene, mesh, meshes_out, materials_out);
     }
     for (std::size_t i = 0; i < node->mNumChildren; i++) {
-        process_node(texture_manager, meshes, scene, node->mChildren[i]);
+        process_node(scene, node->mChildren[i], meshes_out, materials_out);
     }
 }
 
-
-Model load_model(TextureManager &texture_manager, const std::string& model_path)
+Model load_model(const std::string &model_path)
 {
+    Model model;
     std::cout << "Loading model " << model_path << std::endl;
     Assimp::Importer importer;
     const aiScene *scene = importer.ReadFile(
@@ -118,26 +119,9 @@ Model load_model(TextureManager &texture_manager, const std::string& model_path)
         std::cout << "ERROR::ASSIMP::" << importer.GetErrorString() << std::endl;
     }
     std::vector<Mesh> meshes;
-    process_node(texture_manager, meshes, scene, scene->mRootNode);
-    return Model(meshes);
-}
-
-Model load_model(const std::string &path)
-{
-    Model model;
-    std::cout << "Loading model " << path << std::endl;
-    Assimp::Importer importer;
-    const aiScene *scene = importer.ReadFile(
-        model_path.c_str(),
-        aiProcess_Triangulate | aiProcess_FlipUVs
-    );
-    if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) {
-        std::cout << "ERROR::ASSIMP::" << importer.GetErrorString() << std::endl;
-    }
-    std::vector<Mesh> meshes;
-    std::vector<std::string> materials;
-    process_node(texture_manager, meshes, scene, scene->mRootNode);
-    for (size_t i = meshes.size(); i++) {
+    std::vector<Material> materials;
+    process_node(scene, scene->mRootNode, meshes, materials);
+    for (size_t i = 0; i < meshes.size(); i++) {
         model.add_mesh(meshes[i], materials[i]);
     }
     return model;

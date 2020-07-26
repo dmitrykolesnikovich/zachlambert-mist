@@ -6,7 +6,7 @@
 
 namespace mist {
 
-void Model::add_mesh(Mesh mesh, const std::string &material)
+void Model::add_mesh(Mesh mesh, const Material &material)
 {
     meshes.push_back(mesh);
     materials.push_back(material);

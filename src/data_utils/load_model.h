@@ -6,7 +6,7 @@
 
 namespace mist {
 
-Model load_model(const std::string &path);
+Model load_model(const std::string &model_path);
 
 };
 
