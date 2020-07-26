@@ -16,6 +16,7 @@ public:
     );
     bool initialise();
     bool is_running();
+    void update();
     unsigned int get_width() { return width; }
     unsigned int get_height() { return height; }
     GLFWwindow *get_window() { return window; }

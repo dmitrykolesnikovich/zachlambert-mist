@@ -26,6 +26,7 @@ Mesh::Mesh(
     vertices(vertices),
     indices(indices)
 {
+    /*
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
     glGenBuffers(1, &EBO);
@@ -69,13 +70,16 @@ Mesh::Mesh(
     );
 
     glBindVertexArray(0); // Unbind the current VAO
+    */
 }
 
 void Mesh::render(const Shader &shader)const
 {
+    /*
     shader.use_material(material);
     glBindVertexArray(VAO);
     glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_SHORT, 0);
+    */
 }
 
 } // namespace mist

@@ -5,7 +5,7 @@ namespace mist {
 bool Scene::add_entity(std::string name, Entity entity)
 {
     return entities.insert(
-        std::make_pair<std::string, Entity>(name, entity)->second;
+        std::pair<std::string, Entity>(name, entity)).second;
 }
 
 Entity *Scene::find_entity(std::string name)
@@ -13,16 +13,16 @@ Entity *Scene::find_entity(std::string name)
     std::unordered_map<std::string, Entity>::iterator search
         = entities.find(name);
     if (search != entities.end()) {
-        return search;
+        return &(search->second);
     } else {
         return nullptr;
     }
 }
 
-void Scene::add_light(std::string name, Light light)
+bool Scene::add_light(std::string name, Light light)
 {
-    return entities.insert(
-        std::make_pair<std::string, Entity)(name, entity)->second;
+    return lights.insert(
+        std::pair<std::string, Light>(name, light)).second;
 }
 
 Light *Scene::find_light(std::string name)
@@ -30,7 +30,7 @@ Light *Scene::find_light(std::string name)
     std::unordered_map<std::string, Light>::iterator search
         = lights.find(name);
     if (search != lights.end()) {
-        return search;
+        return &(search->second);
     } else {
         return nullptr;
     }

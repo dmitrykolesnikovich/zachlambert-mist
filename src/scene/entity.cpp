@@ -30,6 +30,7 @@ void Entity::set_position(const glm::vec3 &vector)
     model_translation = glm::translate(vector);
 }
 
+/*
 void Entity::render(const Camera &camera, const Light &light)
 {
     m = model_translation * model_rotation * model_scaling;
@@ -43,5 +44,6 @@ void Entity::render(const Camera &camera, const Light &light)
 
     model.render(shader);
 }
+*/
 
 } // namespace mist

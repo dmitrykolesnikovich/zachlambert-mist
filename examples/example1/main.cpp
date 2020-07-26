@@ -112,6 +112,8 @@ int main()
         // On changing properties, a dirty flag is set within the object
         // telling the renderer to recompute any necessary information
         renderer.render(scene, resources);
+
+        window.update();
     }
     return 0;
 }

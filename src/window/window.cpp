@@ -53,4 +53,10 @@ bool Window::is_running()
         && !glfwWindowShouldClose(window);
 }
 
+void Window::update()
+{
+    glfwSwapBuffers(window);
+    glfwPollEvents();
+}
+
 } // namespace mist
