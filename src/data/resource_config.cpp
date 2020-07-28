@@ -3,23 +3,23 @@
 
 namespace mist {
 
-void ModelConfig::set_type(ModelType type)
+void MeshConfig::set_type(MeshType type)
 {
     this->type = type;
 }
 
-void ModelConfig::set_dimension(std::string name, float value)
+void MeshConfig::set_dimension(std::string name, float value)
 {
     // Overwrite if already present
     dimensions[name] = value;
 }
 
-void ModelConfig::set_material(std::string material)
+void MeshConfig::set_material(std::string material)
 {
     this->material = material;
 }
 
-float ModelConfig::get_dimension(const std::string &name, float default_value)const
+float MeshConfig::get_dimension(const std::string &name, float default_value)const
 {
     std::unordered_map<std::string, float>::const_iterator search
         = dimensions.find(name);

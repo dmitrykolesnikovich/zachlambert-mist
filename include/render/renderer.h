@@ -51,14 +51,9 @@ public:
         const std::string &name,
         const ModelConfig &config
     );
-    bool create_material_from_config(
-        const std::string &name,
-        const MaterialConfig &config
-    );
 private:
     std::string base_dir;
     std::unordered_map<std::string, Shader> shaders;
-    std::unordered_map<std::string, Material> materials;
     std::unordered_map<std::string, Texture> textures;
     std::unordered_map<std::string, Model> models;
 };

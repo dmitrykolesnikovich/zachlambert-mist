@@ -72,13 +72,14 @@ int main()
     mist::MaterialConfig matte_red;
     matte_red.set_diffuse_color(1, 0, 0);
     matte_red.set_specular_color(0.5f, 0.5f, 0.5f);
-    renderer.create_material_from_config("matte red", matte_red);
+    // renderer.create_material_from_config("matte red", matte_red);
 
-    mist::ModelConfig my_sphere_config;
-    my_sphere_config.set_type(mist::ModelType::SPHERE);
-    my_sphere_config.set_dimension("radius", 2);
-    my_sphere_config.set_material("matte red");
-    renderer.create_model_from_config("my_sphere", my_sphere_config);
+    mist::MeshConfig sphere_mesh;
+    sphere_mesh.set_type(mist::MeshType::SPHERE);
+    sphere_mesh.set_dimension("radius", 2);
+    sphere_mesh.set_material("matte red");
+
+    renderer.create_model_from_config("my_sphere", sphere_mesh, matte_red);
 
     mist::Entity box;
     box.set_model("box");

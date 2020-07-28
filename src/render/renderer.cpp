@@ -20,6 +20,10 @@ void Renderer::render(const Scene &scene)
     glClearColor(0.3f, 0.3f, 0.3f, 0.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+    // Do any matrix updates on the scene entities
+    // and camera
+
+
     const Entity *entity;
     glm::mat4 mat_mvp, mat_m;
     for(auto it = scene.get_entities().cbegin();
@@ -60,22 +64,15 @@ bool Renderer::create_model_from_file(const std::string &name, const std::string
     }
 }
 
-bool Renderer::create_model_from_config(const std::string &name, const ModelConfig &config)
+bool Renderer::create_model_from_config(
+    const std::string &name,
+    const MeshConfig &mesh_config,
+    const MaterialConfig &material_config)
 {
     if (models.find(name) != models.end()) {
-        Model model = create_model(config);
+        Model model;
+        model.add_mesh(create_mesh(mesh_config), create_material(material_config));;
         models.insert(std::pair<std::string, Model>(name, model));
-        return true;
-    } else {
-        return false;
-    }
-}
-
-bool Renderer::create_material_from_config(const std::string &name, const MaterialConfig &config)
-{
-    if (materials.find(name) != materials.end()) {
-        Material material = create_material(config);
-        materials.insert(std::pair<std::string, Material>(name, material));
         return true;
     } else {
         return false;

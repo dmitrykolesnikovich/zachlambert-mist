@@ -8,12 +8,12 @@
 
 namespace mist {
 
-enum class ModelType {
+enum class MeshType {
     SPHERE,
     BOX
 };
 
-class ModelConfig {
+class MeshConfig {
 public:
     void set_type(ModelType type);
     void set_dimension(std::string name, float value);

@@ -7,7 +7,7 @@
 
 namespace mist {
 
-Mesh create_sphere(const ModelConfig &config)
+Mesh create_sphere(const MeshConfig &config)
 {
     std::vector<glm::vec3> positions;
     std::vector<glm::vec3> normals;
@@ -94,7 +94,7 @@ Mesh create_sphere(const ModelConfig &config)
     return Mesh(vertices, indices);
 }
 
-Mesh create_box(const ModelConfig &config)
+Mesh create_box(const MeshConfig &config)
 {
     static const std::vector<glm::vec3> positions = {
         // -X face
@@ -195,17 +195,17 @@ Mesh create_box(const ModelConfig &config)
     return Mesh(vertices, indices);
 }
 
-Mesh create_mesh(const ModelConfig &config)
+Mesh create_mesh(const MeshConfig &config)
 {
     switch (config.get_type()) {
-        case ModelType::SPHERE:
+        case MeshType::SPHERE:
             return create_sphere(config);
-        case ModelType::BOX:
+        case MeshType::BOX:
             return create_box(config);
     }
 }
 
-Model create_model(const ModelConfig &config)
+Model create_model(const MeshConfig &config)
 {
     Model model;
     Mesh mesh = create_mesh(config);
