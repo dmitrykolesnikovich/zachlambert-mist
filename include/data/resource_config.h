@@ -15,14 +15,14 @@ enum class MeshType {
 
 class MeshConfig {
 public:
-    void set_type(ModelType type);
+    void set_type(MeshType type);
     void set_dimension(std::string name, float value);
     void set_material(std::string material);
-    const ModelType get_type()const{ return type; }
+    const MeshType get_type()const{ return type; }
     float get_dimension(const std::string &name, float default_value)const;
     const std::string &get_material()const{ return material; }
 private:
-    ModelType type;
+    MeshType type;
     std::unordered_map<std::string, float> dimensions;
     std::string material;    
 };

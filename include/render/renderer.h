@@ -21,8 +21,10 @@
  * absolute transform.
  */
 
-#include <map>
 #include <list>
+#include <map>
+#include <set>
+#include <vector>
 
 #include <glm/glm.hpp>
 
@@ -55,54 +57,9 @@ bool render_object_compare(const RenderObject &a, const RenderObject &b)
     return false;
 }
 
-// Usage of the Renderer:
-// 1. Construction
-// - Generate buffers for the static VBO and EBO, but don't configure
-//   them yet.
-// 1. Load models:
-// - A model is a vector of meshes and materials
-// - A mesh is a vector of vertices and indices
-// - A material is a structure of properties and texture paths
-// 2. While loading models, do the following:
-// - For each mesh/material pair:
-//   - Load the vertices into the shared vertices vector
-//   - Load the indices into the shared indices vector
-//   - Create a VAO for the mesh
-//   - If it uses a texture, get the texture id
-//   - Determine the material shader, and get the shader id
-// - For the model:
-//   - Store a ModelObject stucture, containing a vector of VAOs
-//     and vector of MaterialObjects, with the texture id and shader id
-// 3. Initialisation
-// - Initialise the VBO and EBO buffers, by calling glBufferData, and pointing
-//   to the shared vertices and indices vectors.
-// 4. Adding entities
-// - A render object is a structure of: shader id, material index, VAO,
-//   mvp matrix (with unique mvp matrix id), and pointer to the entity.
-// - When adding an entity:
-//   - A render object is stored in the render object for each mesh/material pair
-//     These are stored in a map, ordered by shader id, material index, VAO, mvp id
-//   - A vector of pointers to these render objects is stored in the entity.
-//     On destruction, the entity calls invalidate() on all render objects, which
-//     causes them to be removed on the next render.
-// 5. Rendering
-// - Accesses the global information: camera and lights
-// - Checks the dirty flag on any of these objects, and if set, recomputes
-//   necessary information (ie: their matrices)
-// - On rendering, the renderer iterates through the render objects, and due to
-//   how they are ordered, minimises the number of times it has to change the
-//   render environment (ie: changing shader, material, VAO, etc)
-// - When loading each shader, the global uniforms are loaded first
-// - When loading an entity mvp, it checks the dirty flag, and if set, recomputes
-//   the model matrix. If the camera view matrix was changed, the mvp matrix is
-//   also recomputed.
-
 class Renderer {
 public:
-    Renderer(std::string base_dir = "data"):base_dir(base_dir) {}
-    void initialise();
-    void render(const Scene &scene);
-
+    Renderer(std::string base_dir = "data");
     bool create_model_from_file(
         const std::string &name,
         const std::string &relative_path
@@ -112,14 +69,21 @@ public:
         const MeshConfig &mesh_config,
         const MaterialConfig &material_config
     );
+    void initialise();
+    void render(const Scene &scene);
+
 private:
+    void add_model(const std::string &name, Model &model);
+    void process_model(const std::string &name, const Model &model);
+
     std::string base_dir;
-    // Raw data
+    // Containers for processing loaded data 
     std::unordered_map<std::string, Shader> shaders;
     std::unordered_map<std::string, Texture> textures;
     std::unordered_map<std::string, Model> models;
+    std::vector<Material> materials;
     // Unpacked datk
-    std::map<RenderObject> render_objects;
+    std::set<RenderObject> render_objects;
     // Static data
     std::vector<Vertex> static_vertices;
     std::vector<unsigned short> static_indices;

@@ -16,7 +16,7 @@ set(SRC
     # src/data/shader_manager.cpp
     # src/data/texture_manager.cpp
     src/data_utils/create_material.cpp
-    src/data_utils/create_model.cpp
+    src/data_utils/create_mesh.cpp
     src/data_utils/load_model.cpp
     src/render/renderer.cpp
     src/scene/camera.cpp

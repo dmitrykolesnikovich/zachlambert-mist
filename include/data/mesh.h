@@ -30,13 +30,13 @@ struct Vertex {
 
 class Mesh {
 public:
-    Mesh(
-        const std::vector<Vertex> &vertices,
-        const std::vector<unsigned short> &indices);
+    Mesh(const std::vector<Vertex> &vertices, const std::vector<unsigned short> &indices): vertices(vertices), indices(indices) {}
     void render(const Shader &shader)const;
     // Raw mesh data
     std::vector<Vertex> vertices;
     std::vector<unsigned short> indices;
+    std::size_t vertices_offset;
+    std::size_t indices_offset;
 private:
     // Render data
     unsigned int VAO, VBO, EBO;

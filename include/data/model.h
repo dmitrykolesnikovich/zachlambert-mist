@@ -14,6 +14,7 @@ public:
     void add_mesh(Mesh mesh, const Material &material);
     const std::size_t get_mesh_count()const{ return meshes.size(); }
     const Mesh &get_mesh(std::size_t index)const{ return meshes[index]; }
+    Mesh &get_mesh(std::size_t index) { return meshes[index]; }
     const Material &get_material(std::size_t index)const{ return materials[index]; }
 private:
     std::vector<Mesh> meshes;
