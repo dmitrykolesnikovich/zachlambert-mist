@@ -4,8 +4,9 @@
 
 namespace mist {
 
-Shader::Shader(unsigned int program_id):program_id(program_id)
+void Shader::initialise(unsigned int program_id)
 {
+    this->program_id = program_id;
     mvp_loc = glGetUniformLocation(program_id, "MVP");
     m_loc = glGetUniformLocation(program_id, "M");
     v_loc = glGetUniformLocation(program_id, "V");

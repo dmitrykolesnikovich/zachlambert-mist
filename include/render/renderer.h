@@ -80,6 +80,7 @@ private:
     // Variables for resource management
     std::string base_dir;
     TextureManager texture_manager;
+    ShaderManager shader_manager;
     std::size_t material_id = 0;
     std::size_t entity_id = 0;
 

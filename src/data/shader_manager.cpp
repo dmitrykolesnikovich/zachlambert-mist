@@ -50,7 +50,7 @@ void compile_and_check_shader(
     }
 }
 
-Shader load_shader(const std::string &vs_path, const std::string &fs_path)
+unsigned int load_shader(const std::string &vs_path, const std::string &fs_path)
 {
     // Create shaders
     unsigned int vertex_shader_id = glCreateShader(GL_VERTEX_SHADER);
@@ -102,24 +102,29 @@ Shader load_shader(const std::string &vs_path, const std::string &fs_path)
     glDeleteShader(vertex_shader_id);
     glDeleteShader(fragment_shader_id);
 
-    return Shader(program_id);
+    return program_id;
 }
 
-const Shader &ShaderManager::get_shader(
-    const std::string &vs_relative_path,
-    const std::string &fs_relative_path)
+ShaderManager::ShaderManager(std::string base_dir)
 {
-    const std::string key = vs_relative_path + " " + fs_relative_path;
-    std::unordered_map<std::string, Shader>::const_iterator search
-        = shaders.find(key);
-    if (search != shaders.end()) {
-        return search->second;
-    } else {
-        std::pair<std::string, Shader> new_pair(
-            key,
-            load_shader(root_dir + vs_relative_path, root_dir + fs_relative_path)
-        );
-        return shaders.insert(new_pair).first->second;
+    static const std::string shader_paths[static_cast<std::size_t>(ShaderType::COUNT)] = {
+        "shaders/colored", // COLORED
+        "shaders/textured" // TEXTURED
+    };
+    for (std::size_t i = 0; i < static_cast<std::size_t>(ShaderType::COUNT); i++) {
+        shaders[i].initialise(load_shader(
+            shader_paths[i] + ".vs", shader_paths[i] + ".fs"
+        ));
+    }
+}
+
+std::size_t determine_shader_index(const Material &material)
+{
+    switch (material.type) {
+        case MaterialType::COLORED:
+            return static_cast<std::size_t>(ShaderType::COLORED);
+        case MaterialType::TEXTURED:
+            return static_cast<std::size_t>(ShaderType::TEXTURED);
     }
 }
 

@@ -10,7 +10,7 @@ namespace mist {
 
 class Shader {
 public:
-    Shader(unsigned int program_id);
+    void initialise(unsigned int program_id);
     void use_program()const;
     void use_mat_m(const glm::mat4 &m)const;
     void use_mat_v(const glm::mat4 &v)const;

@@ -26,9 +26,7 @@
   - Load the indices into the shared indices vector
   - If it uses a texture, get the texture id, store in the material
   - Get a material id for the material and add to the material
-- For the model:
-  - Store a ModelObject stucture, containing a vector of VAOs
-    and vector of MaterialObjects, with the texture id and shader id
+  - Determine the shader id for the material and add to the material
 3. Initialisation
 - Initialise the VBO and EBO buffers, by calling glBufferData, and pointing
   to the shared vertices and indices vectors.
