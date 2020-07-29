@@ -8,6 +8,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/transform.hpp>
+#include <GLFW/glfw3.h>
 
 #include "scene/scene.h"
 #include "window/window.h"
@@ -16,39 +17,38 @@
 #include "data/resource_config.h"
 #include "render/renderer.h"
 
-/*
-void handle_input()
+void handle_input(mist::Window &window, mist::Camera &camera)
 {
     const static float mouse_speed = 0.08f;
     double mx, my;
-    glfwGetCursorPos(window, &mx, &my);
+    glfwGetCursorPos(window.get_window(), &mx, &my);
     // Reset mouse position for the next frame
-    glfwSetCursorPos(window, WIDTH/2, HEIGHT/2);
+    glfwSetCursorPos(window.get_window(), window.get_width()/2, window.get_height()/2);
 
-    float pan_velocity = mouse_speed * float(WIDTH/2 - mx);
-    float tilt_velocity = -mouse_speed * float(HEIGHT/2 - my);
+    float pan_velocity = mouse_speed * float(window.get_width()/2 - mx);
+    float tilt_velocity = -mouse_speed * float(window.get_height()/2 - my);
 
     const static float speed = 5.0f;
     glm::vec3 camera_velocity;
     camera_velocity.x = 0;
-    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
+    if (glfwGetKey(window.get_window(), GLFW_KEY_W) == GLFW_PRESS) {
         camera_velocity.x += speed;
     }
-    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
+    if (glfwGetKey(window.get_window(), GLFW_KEY_S) == GLFW_PRESS) {
         camera_velocity.x -= speed;
     }
     camera_velocity.z = 0;
-    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
+    if (glfwGetKey(window.get_window(), GLFW_KEY_D) == GLFW_PRESS) {
         camera_velocity.z += speed;
     }
-    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
+    if (glfwGetKey(window.get_window(), GLFW_KEY_A) == GLFW_PRESS) {
         camera_velocity.z -= speed;
     }
     camera_velocity.y = 0;
-    if (glfwGetKey(window, GLFW_KEY_SPACE)) {
+    if (glfwGetKey(window.get_window(), GLFW_KEY_SPACE)) {
         camera_velocity.y += speed;
     }
-    if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT)) {
+    if (glfwGetKey(window.get_window(), GLFW_KEY_LEFT_SHIFT)) {
         camera_velocity.y -= speed;
     }
 
@@ -56,7 +56,6 @@ void handle_input()
     camera.set_pan_velocity(pan_velocity);
     camera.set_tilt_velocity(tilt_velocity);
 }
-*/
 
 int main()
 {
@@ -116,6 +115,7 @@ int main()
 
     while (window.is_running()) {
         float dt = clock.sample_dt();
+        handle_input(window, scene.get_camera());
         scene.get_camera().update(dt);
         // update game logic
         // includes addition/insertion of entities, lights,
