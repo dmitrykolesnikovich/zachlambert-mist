@@ -1,6 +1,6 @@
 #include "render/renderer.h"
+#include "data_utils/create_mesh.h"
 #include "data_utils/create_material.h"
-#include "data_utils/create_model.h"
 #include "data_utils/load_model.h"
 
 #include <iostream>
@@ -76,6 +76,7 @@ bool Renderer::create_model_from_config(
         return true;
     } else {
         return false;
+        models.insert(std::pair<std::string, Model>(name, model));
     }
 }
 
