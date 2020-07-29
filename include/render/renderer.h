@@ -31,13 +31,13 @@ struct RenderObject {
     std::size_t indices_offset;
     std::size_t vertices_offset;
     std::shared_ptr<bool> invalid_flag;
-
+    bool is_invalid()const{ return *invalid_flag; }
 friend const bool operator<(const RenderObject &a, const RenderObject &b);
 };
 
 class Renderer {
 public:
-    Renderer(std::string base_dir = "data");
+    Renderer(std::string base_dir = "data/");
     bool create_model_from_file(
         const std::string &name,
         const std::string &relative_path

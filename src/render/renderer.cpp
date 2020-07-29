@@ -4,6 +4,7 @@
 #include "data_utils/load_model.h"
 
 #include <iostream>
+#include <iterator>
 
 namespace mist {
 
@@ -34,7 +35,7 @@ Renderer::Renderer(std::string base_dir):
 
 bool Renderer::create_model_from_file(const std::string &name, const std::string &relative_path)
 {
-    if (models.find(name) != models.end()) {
+    if (models.find(name) == models.end()) {
         Model model = load_model(base_dir + relative_path);
         add_model(name, model);
         return true;
@@ -48,7 +49,7 @@ bool Renderer::create_model_from_config(
     const MeshConfig &mesh_config,
     const MaterialConfig &material_config)
 {
-    if (models.find(name) != models.end()) {
+    if (models.find(name) == models.end()) {
         Model model;
         model.add_mesh(create_mesh(mesh_config), create_material(material_config));;
         add_model(name, model);
@@ -68,10 +69,12 @@ void Renderer::add_model(const std::string &name, Model &model)
         mesh->vertices_offset = static_vertices.size();
         mesh->indices_offset = static_indices.size();
         std::copy(
-            mesh->vertices.cbegin(), mesh->vertices.cend(), static_vertices.end()
+            mesh->vertices.cbegin(), mesh->vertices.cend(),
+            back_inserter(static_vertices)
         );
         std::copy(
-            mesh->indices.cbegin(), mesh->indices.cend(), static_indices.end()
+            mesh->indices.cbegin(), mesh->indices.cend(),
+            back_inserter(static_indices)
         );
         mesh->id = mesh_id++; // Evaluate then increment
 
@@ -85,8 +88,9 @@ void Renderer::add_model(const std::string &name, Model &model)
                 material->specular_texture_path
             ).id;
         }
-        material->id = material_id++; // Evaluate then increment
         material->shader_index = shader_manager.determine_shader_index(*material);
+        material->id = materials.size();
+        materials.push_back(*material);
     }
     models.insert(std::pair<std::string, Model>(name, model));
 }
@@ -139,6 +143,7 @@ void Renderer::initialise()
 void Renderer::add_entity(const Entity& entity)
 {
     std::shared_ptr<bool> invalid_flag(new bool);
+    *invalid_flag = false;
     entity.set_invalid_flag(invalid_flag);
     // TODO: Handle invalid model names
     const Model &model = models.at(entity.get_model());
@@ -179,12 +184,12 @@ void Renderer::render(const Scene &scene)
 
     std::set<RenderObject>::iterator it, remove_it;
     for (it = render_objects.begin(); it != render_objects.end(); it++) {
-        while (it->invalid_flag) {
+        while (it->is_invalid()) {
             remove_it = it++;
             render_objects.erase(remove_it);
+            printf("Removing\n");
         }
         if (it == render_objects.end()) break;
-
         if (it->shader_id != shader_id || first) {
             shader_id = it->shader_id;
             shader = &shader_manager.get_shader(shader_id);

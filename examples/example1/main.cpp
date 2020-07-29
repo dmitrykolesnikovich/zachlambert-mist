@@ -76,14 +76,15 @@ int main()
 
     mist::MeshConfig sphere_mesh;
     sphere_mesh.set_type(mist::MeshType::SPHERE);
-    sphere_mesh.set_dimension("radius", 2);
+    sphere_mesh.set_dimension("radius", 1);
     sphere_mesh.set_material("matte red");
 
     renderer.create_model_from_config("my_sphere", sphere_mesh, matte_red);
 
     mist::Entity box;
     box.set_model("box");
-    box.set_orientation(glm::rotate(glm::radians(45.0f), glm::vec3(0.0f, 1.0f, 0.0f)));
+    //box.set_position(glm::vec3(0.0f, 0.0f, 3.0f));
+    //box.set_orientation(glm::rotate(glm::radians(45.0f), glm::vec3(0.0f, 1.0f, 0.0f)));
 
     mist::Entity sphere;
     sphere.set_model("my_sphere");
@@ -99,15 +100,20 @@ int main()
     scene.add_light("main light", light);
 
     mist::Camera &camera = scene.get_camera();
-    camera.set_position(glm::vec3(0.0f, 0.0f, 5.0f));
+    camera.set_position(glm::vec3(0.0f, 0.0f, 0.0f));
+    camera.set_pan_velocity(5);
+    camera.set_tilt_velocity(0.2);
 
     mist::Clock clock;
 
-    renderer.add_entity(scene.get_entities().at("box"));
-    renderer.add_entity(scene.get_entities().at("sphere"));
+    renderer.initialise();
+
+    renderer.add_entity(*scene.find_entity("box"));
+    renderer.add_entity(*scene.find_entity("sphere"));
 
     while (window.is_running()) {
         float dt = clock.sample_dt();
+        scene.get_camera().update(dt);
         // update game logic
         // includes addition/insertion of entities, lights,
         // editing camera, changing entity models, etc.

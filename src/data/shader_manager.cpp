@@ -108,8 +108,8 @@ unsigned int load_shader(const std::string &vs_path, const std::string &fs_path)
 ShaderManager::ShaderManager(std::string base_dir)
 {
     static const std::string shader_paths[static_cast<std::size_t>(ShaderType::COUNT)] = {
-        "/shaders/colored", // COLORED
-        "/shaders/textured" // TEXTURED
+        "shaders/colored", // COLORED
+        "shaders/textured" // TEXTURED
     };
     for (std::size_t i = 0; i < static_cast<std::size_t>(ShaderType::COUNT); i++) {
         shaders[i].initialise(load_shader(
