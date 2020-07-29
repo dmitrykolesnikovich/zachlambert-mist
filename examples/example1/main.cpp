@@ -103,6 +103,9 @@ int main()
 
     mist::Clock clock;
 
+    renderer.add_entity(scene.get_entities().at("box"));
+    renderer.add_entity(scene.get_entities().at("sphere"));
+
     while (window.is_running()) {
         float dt = clock.sample_dt();
         // update game logic

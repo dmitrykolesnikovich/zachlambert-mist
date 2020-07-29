@@ -23,9 +23,9 @@ uniform float LightPower;
 uniform vec3 LightColor;
 
 void main(){
-    vec3 MaterialDiffuseColor = material.diffuse_color + texture(material.diffuse_texture, UV).rgb;
+    vec3 MaterialDiffuseColor = material.diffuse_color;
     vec3 MaterialAmbientColor = vec3(0.1,0.1,0.1) * MaterialDiffuseColor;
-    vec3 MaterialSpecularColor = material.specular_color + texture(material.specular_texture, UV).rgb;
+    vec3 MaterialSpecularColor = material.specular_color;
 
     float distance = length(LightPosition_worldspace - Position_worldspace);
 

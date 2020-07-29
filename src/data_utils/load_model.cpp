@@ -59,32 +59,38 @@ void process_mesh(
     std::cout << "Processing material" << std::endl;
     // Process material
     Material material;
+    aiString relative_path;
+    aiColor3D color;
     if (mesh->mMaterialIndex >= 0) {
         aiMaterial *ai_material = scene->mMaterials[mesh->mMaterialIndex];
 
         if (ai_material->GetTextureCount(aiTextureType_DIFFUSE) > 0) {
-            aiString relative_path;
+            // TODO: Need to be able to handle a model having a diffuse
+            // texture and specular colour, or vice versa, instead of textures
+            // for both, or colours for both. Needs more material types, or
+            // a different way to classify materials.
+
             ai_material->GetTexture(aiTextureType_DIFFUSE, 0, &relative_path);
-            material.diffuse_texture = relative_path.C_Str();
-        }
+            material.diffuse_texture_path = relative_path.C_Str();
+            material.type = MaterialType::TEXTURED;
 
-        aiColor3D ai_diffuse_color(0.0f, 0.0f, 0.0f);
-        ai_material->Get(AI_MATKEY_COLOR_DIFFUSE, ai_diffuse_color);
-        material.diffuse_color = glm::vec3(
-            ai_diffuse_color.r, ai_diffuse_color.g, ai_diffuse_color.b
-        );
-
-        if (ai_material->GetTextureCount(aiTextureType_SPECULAR) > 0) {
-            aiString relative_path;
+            // For now, assuming that a model has both textures
             ai_material->GetTexture(aiTextureType_SPECULAR, 0, &relative_path);
-            material.specular_texture = relative_path.C_Str();
-        }
+            material.specular_texture_path = relative_path.C_Str();
+        } else {
 
-        aiColor3D ai_specular_color(0.0f, 0.0f, 0.0f);
-        ai_material->Get(AI_MATKEY_COLOR_SPECULAR, ai_specular_color);
-        material.specular_color = glm::vec3(
-            ai_specular_color.r, ai_specular_color.g, ai_specular_color.b
-        );
+            ai_material->Get(AI_MATKEY_COLOR_DIFFUSE, color);
+            material.diffuse_color = glm::vec3(
+                color.r, color.g, color.b
+            );
+
+            ai_material->Get(AI_MATKEY_COLOR_SPECULAR, color);
+            material.specular_color = glm::vec3(
+                color.r, color.g, color.b
+            );
+
+            material.type = MaterialType::COLORED;
+        }
     }
     meshes_out.push_back(Mesh(vertices, indices));
     materials_out.push_back(material);

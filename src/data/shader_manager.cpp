@@ -108,17 +108,17 @@ unsigned int load_shader(const std::string &vs_path, const std::string &fs_path)
 ShaderManager::ShaderManager(std::string base_dir)
 {
     static const std::string shader_paths[static_cast<std::size_t>(ShaderType::COUNT)] = {
-        "shaders/colored", // COLORED
-        "shaders/textured" // TEXTURED
+        "/shaders/colored", // COLORED
+        "/shaders/textured" // TEXTURED
     };
     for (std::size_t i = 0; i < static_cast<std::size_t>(ShaderType::COUNT); i++) {
         shaders[i].initialise(load_shader(
-            shader_paths[i] + ".vs", shader_paths[i] + ".fs"
+            base_dir + shader_paths[i] + ".vs", base_dir + shader_paths[i] + ".fs"
         ));
     }
 }
 
-std::size_t determine_shader_index(const Material &material)
+std::size_t ShaderManager::determine_shader_index(const Material &material)
 {
     switch (material.type) {
         case MaterialType::COLORED:

@@ -1,4 +1,4 @@
-#include "data_utils/create_model.h"
+#include "data_utils/create_mesh.h"
 
 #include <math.h>
 
@@ -203,13 +203,6 @@ Mesh create_mesh(const MeshConfig &config)
         case MeshType::BOX:
             return create_box(config);
     }
-}
-
-Model create_model(const MeshConfig &config)
-{
-    Model model;
-    Mesh mesh = create_mesh(config);
-    return model;
 }
 
 } // namespace mist

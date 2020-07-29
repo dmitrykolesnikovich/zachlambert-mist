@@ -7,6 +7,18 @@
 
 namespace mist {
 
+const bool operator<(const RenderObject &a, const RenderObject &b)
+{
+    // Return true if a should go before b (strictly)
+    // If the items are equal, should return false with either order
+    if (a.shader_id != b.shader_id) return (a.shader_id < b.shader_id);
+    if (a.material_id != b.material_id) return (a.material_id < b.material_id);
+    if (a.entity_id != b.entity_id) return (a.entity_id < b.entity_id);
+    return (a.mesh_id < b.mesh_id);
+    // Shouldn't have identical render objects, otherwise they just render
+    // the same thing
+}
+
 // ----- 1: Construction -----
 
 Renderer::Renderer(std::string base_dir):

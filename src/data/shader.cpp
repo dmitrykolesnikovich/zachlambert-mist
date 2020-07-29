@@ -73,30 +73,29 @@ void Shader::use_light(const Light &light)const
 
 void Shader::use_material(const Material &material)const
 {
-    if (material.diffuse_texture) {
-        glActiveTexture(GL_TEXTURE0);
-        glUniform1i(diffuse_texture_loc, 0);
-        glBindTexture(GL_TEXTURE_2D, material.diffuse_texture->id);
-    } else {
+    // TODO: Instead of this, create a different shader for the two
+    // types of material.
+    if (material.type == MaterialType::COLORED) {
         glUniform3f(
             diffuse_color_loc,
             material.diffuse_color.x,
             material.diffuse_color.y,
             material.diffuse_color.z
         );
-    }
-
-    if (material.specular_texture) {
-        glActiveTexture(GL_TEXTURE1);
-        glUniform1i(specular_texture_loc, 1);
-        glBindTexture(GL_TEXTURE_2D, material.specular_texture->id);
-    } else {
         glUniform3f(
             specular_color_loc,
             material.specular_color.x,
             material.specular_color.y,
             material.specular_color.z
         );
+    } else {
+        glActiveTexture(GL_TEXTURE0);
+        glUniform1i(diffuse_texture_loc, 0);
+        glBindTexture(GL_TEXTURE_2D, material.diffuse_texture_id);
+
+        glActiveTexture(GL_TEXTURE1);
+        glUniform1i(specular_texture_loc, 1);
+        glBindTexture(GL_TEXTURE_2D, material.specular_texture_id);
     }
 }
 
