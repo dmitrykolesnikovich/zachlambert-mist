@@ -61,6 +61,8 @@ void Renderer::add_model(const std::string &name, Model &model)
         std::copy(
             mesh->indices.cbegin(), mesh->indices.cend(), static_indices.end()
         );
+        mesh->id = mesh_id++; // Evaluate then increment
+
         // Process material
         material = &model.get_material(i);
         if (material->type == MaterialType::TEXTURED) {
@@ -71,7 +73,7 @@ void Renderer::add_model(const std::string &name, Model &model)
                 material->specular_texture_path
             ).id;
         }
-        material->id = material_id++; // Evaluate value, then increment
+        material->id = material_id++; // Evaluate then increment
         material->shader_index = shader_manager.determine_shader_index(*material);
     }
     models.insert(std::pair<std::string, Model>(name, model));
@@ -130,22 +132,23 @@ void Renderer::add_entity(const Entity& entity)
     const Model &model = models.at(entity.get_model());
     for (std::size_t i = 0; i < model.get_mesh_count(); i++) {
         RenderObject render_object;
-        render_object.shader_i = model.get_material(i).shader_index;
-        render_object.material_i = model.get_material().material_id;
-        render_object.
+        render_object.shader_id = model.get_material(i).shader_index;
+        render_object.material_id = model.get_material(i).id;
+        render_object.entity_id = entity_id++; // Evaluate then increment
+        render_object.mesh_id = model.get_mesh(i).id;
+        render_object.entity = &entity;
+        render_object.index_count = model.get_mesh(i).indices.size();
+        render_object.indices_offset = model.get_mesh(i).indices_offset;
+        render_object.vertices_offset = model.get_mesh(i).vertices_offset;
+        render_object.invalid_flag = invalid_flag;
+        render_objects.insert(render_object);
     }
-    entity.get_model().
-    RenderObject render_object;
-    render_object.shader_i = g
 }
 
 void Renderer::render(const Scene &scene)
 {
     glClearColor(0.3f, 0.3f, 0.3f, 0.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-    // Do any matrix updates on the scene entities
-    // and camera
 
     // In the future, have a set of VAOs, for managing different types
     // of data (ie: static vs dynamic, or different vertex attributes)
@@ -162,7 +165,14 @@ void Renderer::render(const Scene &scene)
 
     // camera.update(); - Add in if necessary
 
-    for (auto it = render_objects.begin(); it != render_objects.end(); it++) {
+    std::set<RenderObject>::iterator it, remove_it;
+    for (it = render_objects.begin(); it != render_objects.end(); it++) {
+        while (it->invalid_flag) {
+            remove_it = it++;
+            render_objects.erase(remove_it);
+        }
+        if (it == render_objects.end()) break;
+
         if (it->shader_id != shader_id || first) {
             shader_id = it->shader_id;
             shader = &shader_manager.get_shader(shader_id);
@@ -178,11 +188,12 @@ void Renderer::render(const Scene &scene)
         if (it->entity_id != entity_id || first) {
             entity_id = it->entity_id;
             mvp = scene.get_camera().get_projection() * scene.get_camera().get_view() * it->entity->get_mat_m();
-            shader.use_mat_m(it->entity->get_mat_m());
+            shader->use_mat_m(it->entity->get_mat_m());
+            shader->use_mat_mvp(mvp);
         }
         glDrawElementsBaseVertex(
             GL_TRIANGLES, it->index_count, GL_UNSIGNED_SHORT,
-            it->indices_offset, it->vertices_offset
+            (void*)it->indices_offset, it->vertices_offset
         );
     }
 }
