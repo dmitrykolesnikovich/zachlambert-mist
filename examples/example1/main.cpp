@@ -68,48 +68,51 @@ int main()
     mist::Renderer renderer;
 
     renderer.create_model_from_file("box", "models/box/box.obj");
+    renderer.create_model_from_file("tree", "models/tree/tree.obj");
 
     mist::MaterialConfig matte_red;
     matte_red.set_diffuse_color(1, 0, 0);
     matte_red.set_specular_color(0.5f, 0.5f, 0.5f);
-    // renderer.create_material_from_config("matte red", matte_red);
 
-    mist::MeshConfig sphere_mesh;
-    sphere_mesh.set_type(mist::MeshType::SPHERE);
-    sphere_mesh.set_dimension("radius", 1);
-    sphere_mesh.set_material("matte red");
+    mist::MeshConfig box_mesh;
+    box_mesh.set_type(mist::MeshType::BOX);
+    box_mesh.set_dimension("width", 1.5f);
+    box_mesh.set_dimension("height", 0.5f);
+    box_mesh.set_dimension("depth", 1.0f);
+    box_mesh.set_material("matte red");
 
-    renderer.create_model_from_config("my_sphere", sphere_mesh, matte_red);
+    renderer.create_model_from_config("red box", box_mesh, matte_red);
 
     mist::Entity box;
     box.set_model("box");
-    //box.set_position(glm::vec3(0.0f, 0.0f, 3.0f));
-    //box.set_orientation(glm::rotate(glm::radians(45.0f), glm::vec3(0.0f, 1.0f, 0.0f)));
+    box.set_position(glm::vec3(5.0f, 0.0f, 0.0f));
 
-    mist::Entity sphere;
-    sphere.set_model("my_sphere");
+    mist::Entity tree;
+    tree.set_model("tree");
+    tree.set_position(glm::vec3(4.0f, 0.0f, 1.0f));
 
     mist::Scene scene;
     scene.add_entity("box", box);
-    scene.add_entity("sphere", sphere);
+    scene.add_entity("tree", tree);
+    // scene.add_entity("red box", red_box);
 
     mist::Light light;
-    light.set_position(glm::vec3(1.0f, 6.0f, 1.0f));
+    light.set_position(glm::vec3(0.0f, 6.0f, -5.0f));
     light.set_color(1, 1, 1);
-    light.set_power(10);
+    light.set_power(100);
     scene.add_light("main light", light);
 
     mist::Camera &camera = scene.get_camera();
-    camera.set_position(glm::vec3(0.0f, 0.0f, 0.0f));
-    camera.set_pan_velocity(5);
-    camera.set_tilt_velocity(0.2);
+    camera.set_position(glm::vec3(0.0f, 3.0f, 0.0f));
+    camera.set_tilt(0.6f);
 
     mist::Clock clock;
 
     renderer.initialise();
 
     renderer.add_entity(*scene.find_entity("box"));
-    renderer.add_entity(*scene.find_entity("sphere"));
+    renderer.add_entity(*scene.find_entity("tree"));
+    // renderer.add_entity(*scene.find_entity("red box"));
 
     while (window.is_running()) {
         float dt = clock.sample_dt();

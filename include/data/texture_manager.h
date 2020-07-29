@@ -9,7 +9,7 @@ namespace mist {
 
 class TextureManager{
 public:
-    TextureManager(std::string base_dir):base_dir(base_dir) {}
+    TextureManager(std::string base_dir):base_dir(base_dir + "textures/") {}
     const Texture &get_texture(const std::string &relative_path);
 private:
     std::string base_dir;

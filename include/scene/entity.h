@@ -25,7 +25,7 @@ public:
     void set_position(const glm::vec3 &vector);
 
     const std::string &get_model()const{ return model; }
-    const glm::mat4 get_mat_m()const{ return mvp; }
+    const glm::mat4 get_mat_m()const{ return model_translation * model_rotation * model_scaling; }
 
     void set_invalid_flag(const std::shared_ptr<bool> &invalid_flag) const{
         this->invalid_flag = invalid_flag;
@@ -37,8 +37,6 @@ private:
     glm::mat4 model_rotation = glm::mat4(1.0f);
     glm::mat4 model_translation = glm::mat4(1.0f);
     glm::mat4 m;
-    glm::mat4 mvp;
-
 
     mutable std::shared_ptr<bool> invalid_flag;
 };

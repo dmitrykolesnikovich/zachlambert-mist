@@ -93,6 +93,7 @@ void Renderer::add_model(const std::string &name, Model &model)
         materials.push_back(*material);
     }
     models.insert(std::pair<std::string, Model>(name, model));
+    std::cout << "Inserted '" << name << "'" << std::endl;
 }
 
 void Renderer::initialise()
@@ -187,7 +188,6 @@ void Renderer::render(const Scene &scene)
         while (it->is_invalid()) {
             remove_it = it++;
             render_objects.erase(remove_it);
-            printf("Removing\n");
         }
         if (it == render_objects.end()) break;
         if (it->shader_id != shader_id || first) {
@@ -208,6 +208,7 @@ void Renderer::render(const Scene &scene)
             shader->use_mat_m(it->entity->get_mat_m());
             shader->use_mat_mvp(mvp);
         }
+
         glDrawElementsBaseVertex(
             GL_TRIANGLES, it->index_count, GL_UNSIGNED_SHORT,
             (void*)it->indices_offset, it->vertices_offset

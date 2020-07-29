@@ -13,6 +13,7 @@ unsigned int load_texture(const std::string &texture_path)
     int width, height, num_channels;
     unsigned char *data = stbi_load(texture_path.c_str(), &width, &height, &num_channels, 0);
     if (!data) {
+        std::cout << "Failed to load " << texture_path << std::endl;
         return 0;
     } else {
         GLuint texture_id;
@@ -66,6 +67,7 @@ const Texture &TextureManager::get_texture(const std::string &relative_path)
             relative_path,
             { load_texture(base_dir + relative_path) } // initalise Texture
         );
+        std::cout << "Texure id = " << new_pair.second.id << std::endl;;
         return textures.insert(new_pair).first->second;
     }
 }
