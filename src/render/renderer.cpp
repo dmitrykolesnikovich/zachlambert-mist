@@ -15,8 +15,6 @@ Renderer::Renderer(std::string base_dir):
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LESS);
     glEnable(GL_CULL_FACE);
-    glGenBuffers(1, &static_VBO);
-    glGenBuffers(1, &static_EBO);
 }
 
 
@@ -74,67 +72,72 @@ void Renderer::add_model(const std::string &name, Model &model)
             ).id;
         }
         material->id = material_id++; // Evaluate value, then increment
-        material->shader_index = shader_manager.determine_shader_index(material);
+        material->shader_index = shader_manager.determine_shader_index(*material);
     }
-
     models.insert(std::pair<std::string, Model>(name, model));
 }
 
 void Renderer::initialise()
 {
-    for (auto it = models.cbegin(); it != models.cend(); it++) {
-        process_model(it->first, it->second);
-    }
+    glGenVertexArrays(1, &static_VAO);
+    glGenBuffers(1, &static_VBO);
+    glGenBuffers(1, &static_EBO);
+
+    glBindVertexArray(static_VAO);
+
+    glBindBuffer(GL_ARRAY_BUFFER, static_VBO);
+    glBufferData(
+        GL_ARRAY_BUFFER,
+        static_vertices.size() * sizeof(Vertex),
+        &static_vertices[0],
+        GL_STATIC_DRAW
+    );
+
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, static_EBO);
+    glBufferData( GL_ELEMENT_ARRAY_BUFFER,
+        static_indices.size() * sizeof(unsigned short),
+        &static_indices[0],
+        GL_STATIC_DRAW
+    );
+
+    // Attribute 0: Vertex positions
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(
+        0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex),
+        (void*)0
+    );
+
+    // Attribute 1: Texture coordinates
+    glEnableVertexAttribArray(1);
+    glVertexAttribPointer(
+        1, 2, GL_UNSIGNED_SHORT, GL_TRUE, sizeof(Vertex),
+        (void*)offsetof(Vertex, tex_coords)
+    );
+
+    // Attribute 2: Normal
+    glEnableVertexAttribArray(2);
+    glVertexAttribPointer(
+        2, 4, GL_INT_2_10_10_10_REV, GL_TRUE, sizeof(Vertex),
+        (void*)offsetof(Vertex, normal_i32)
+    );
 }
 
-void Renderer::process_model(const std::string &name, const Model &model)
+void Renderer::add_entity(const Entity& entity)
 {
-    unsigned int new_VAOs[model.get_mesh_count()];
-    glGenVertexArrays(model.get_mesh_count(), new_VAOs);
-
-    const Mesh *mesh;
+    std::shared_ptr<bool> invalid_flag(new bool);
+    entity.set_invalid_flag(invalid_flag);
+    // TODO: Handle invalid model names
+    const Model &model = models.at(entity.get_model());
     for (std::size_t i = 0; i < model.get_mesh_count(); i++) {
-        mesh = &model.get_mesh(i);
-        glBindVertexArray(new_VAOs[i]);
-
-        glBindBuffer(GL_ARRAY_BUFFER, static_VBO);
-        glBufferData(
-            GL_ARRAY_BUFFER,
-            static_vertices.size() * sizeof(Vertex),
-            &static_vertices[mesh->vertices_offset],
-            GL_STATIC_DRAW
-        );
-
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, static_EBO);
-        glBufferData( GL_ELEMENT_ARRAY_BUFFER,
-            static_indices.size() * sizeof(unsigned short),
-            &static_indices[mesh->indices_offset],
-            GL_STATIC_DRAW
-        );
-
-        // Attribute 0: Vertex positions
-        glEnableVertexAttribArray(0);
-        glVertexAttribPointer(
-            0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex),
-            (void*)0
-        );
-
-        // Attribute 1: Texture coordinates
-        glEnableVertexAttribArray(1);
-        glVertexAttribPointer(
-            1, 2, GL_UNSIGNED_SHORT, GL_TRUE, sizeof(Vertex),
-            (void*)offsetof(Vertex, tex_coords)
-        );
-
-        // Attribute 2: Normal
-        glEnableVertexAttribArray(2);
-        glVertexAttribPointer(
-            2, 4, GL_INT_2_10_10_10_REV, GL_TRUE, sizeof(Vertex),
-            (void*)offsetof(Vertex, normal_i32)
-        );
+        RenderObject render_object;
+        render_object.shader_i = model.get_material(i).shader_index;
+        render_object.material_i = model.get_material().material_id;
+        render_object.
     }
+    entity.get_model().
+    RenderObject render_object;
+    render_object.shader_i = g
 }
-
 
 void Renderer::render(const Scene &scene)
 {
@@ -144,33 +147,43 @@ void Renderer::render(const Scene &scene)
     // Do any matrix updates on the scene entities
     // and camera
 
+    // In the future, have a set of VAOs, for managing different types
+    // of data (ie: static vs dynamic, or different vertex attributes)
 
-    const Entity *entity;
-    glm::mat4 mat_mvp, mat_m;
-    for(auto it = scene.get_entities().cbegin();
-        it!=scene.get_entities().cend();
-        it++)
-    {
-        /*
-        entity = &it->second;
-        mat_m = entity->get_mat_m();
-        mat_mvp = scene.get_camera().get_projection() * scene.get_camera().get_view() * mat_m;
-        // shader.use mvp, m view, light, ...
-        Shader shader = ...
-        // If not already created, load the shaders and pass the
-        // program id back
-        Material material = ...
-        shader.use();
-        shader.use_light(scene.get_lights().begin()->second);
-        shader.use_mat_m(mat_m);
-        shader.use_mat_mvp(mat_mvp);
-        shader.use_mat_v(scene.get_camera().get_view());
-        Model model
-        for each mesh in model:
-            shader.use_material(material);
-            glBindVertexElements(mesh.VAO);
-            glDrawElements(GL_TRIANGLES, mesh.index_count, GL_UNSIGNED_SHORT, 0);
-        */
+    glBindVertexArray(static_VAO);
+    std::size_t shader_id = 0;
+    std::size_t material_id = 0;
+    std::size_t entity_id = 0;
+
+    const Shader *shader;
+    glm::mat4 mvp;
+
+    bool first = true;
+
+    // camera.update(); - Add in if necessary
+
+    for (auto it = render_objects.begin(); it != render_objects.end(); it++) {
+        if (it->shader_id != shader_id || first) {
+            shader_id = it->shader_id;
+            shader = &shader_manager.get_shader(shader_id);
+            shader->use_program();
+            // Just use the first light for now
+            shader->use_light(scene.get_lights().cbegin()->second);
+            shader->use_mat_v(scene.get_camera().get_view());
+        }
+        if (it->material_id != material_id || first) {
+            material_id = it->material_id;
+            shader->use_material(materials[material_id]);
+        }
+        if (it->entity_id != entity_id || first) {
+            entity_id = it->entity_id;
+            mvp = scene.get_camera().get_projection() * scene.get_camera().get_view() * it->entity->get_mat_m();
+            shader.use_mat_m(it->entity->get_mat_m());
+        }
+        glDrawElementsBaseVertex(
+            GL_TRIANGLES, it->index_count, GL_UNSIGNED_SHORT,
+            it->indices_offset, it->vertices_offset
+        );
     }
 }
 

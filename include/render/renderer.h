@@ -37,25 +37,31 @@
 #include "data/resource_config.h"
 #include "scene/scene.h"
 #include "data/texture_manager.h"
+#include "data/shader_manager.h"
 
 namespace mist {
 
 struct RenderObject {
-    std::size_t shader_i;
-    std::size_t VAO_i;
-    std::size_t material_i;
-    std::size_t entity_i;
+    std::size_t shader_id;
+    std::size_t material_id;
+    std::size_t entity_id;
+    std::size_t mesh_id;
+    const Entity *entity;
+    std::size_t index_count;
+    std::size_t indices_offset;
+    std::size_t vertices_offset;
 };
 
 bool render_object_compare(const RenderObject &a, const RenderObject &b)
 {
     // Return true if a should go before b (strictly)
     // If the items are equal, should return false with either order
-    if (a.shader_i != b.shader_i) return (a.shader_i < b.shader_i);
-    if (a.VAO_i != b.VAO_i) return (a.VAO_i < b.VAO_i);
-    if (a.material_i != b.material_i) return (a.material_i < b.material_i);
-    return (a.entity_i < b.entity_i);
-    return false;
+    if (a.shader_id != b.shader_id) return (a.shader_id < b.shader_id);
+    if (a.material_id != b.material_id) return (a.material_id < b.material_id);
+    if (a.entity_id != b.entity_id) return (a.entity_id < b.entity_id);
+    return (a.mesh_id < b.mesh_id);
+    // Shouldn't have identical render objects, otherwise they just render
+    // the same thing
 }
 
 class Renderer {
@@ -71,11 +77,11 @@ public:
         const MaterialConfig &material_config
     );
     void initialise();
+    void add_entity(const Entity& entity);
     void render(const Scene &scene);
 
 private:
     void add_model(const std::string &name, Model &model);
-    void process_model(const std::string &name, const Model &model);
 
     // Variables for resource management
     std::string base_dir;
@@ -89,18 +95,14 @@ private:
     std::unordered_map<std::string, Texture> textures;
     std::unordered_map<std::string, Model> models;
     std::vector<Material> materials;
-    // Unpacked datk
+
+    // Render information
     std::set<RenderObject> render_objects;
-    // Static data
+
+    // Static data (only static for now)
     std::vector<Vertex> static_vertices;
     std::vector<unsigned short> static_indices;
-    unsigned int static_VBO, static_EBO;
-    std::vector<unsigned int> static_VAOs;
-    // Dynamic data
-    std::vector<Vertex> dynamic_vertices;
-    std::vector<unsigned short> dynamic_indices;
-    unsigned int dynamic_VBO, dynamic_EBO;
-    std::vector<unsigned int> dynamic_VAOs;
+    unsigned int static_VAO, static_VBO, static_EBO;
 };
 
 } // namespace mist
