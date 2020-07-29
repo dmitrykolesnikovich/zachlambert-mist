@@ -37,9 +37,7 @@ public:
     std::vector<unsigned short> indices;
     std::size_t vertices_offset;
     std::size_t indices_offset;
-private:
-    // Render data
-    unsigned int VAO, VBO, EBO;
+    unsigned int VAO;
 };
 
 } // namespace data

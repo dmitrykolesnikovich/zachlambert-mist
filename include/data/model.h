@@ -16,6 +16,7 @@ public:
     const Mesh &get_mesh(std::size_t index)const{ return meshes[index]; }
     Mesh &get_mesh(std::size_t index) { return meshes[index]; }
     const Material &get_material(std::size_t index)const{ return materials[index]; }
+    Material &get_material(std::size_t index) { return materials[index]; }
 private:
     std::vector<Mesh> meshes;
     std::vector<Material> materials;

@@ -64,7 +64,7 @@ const Texture &TextureManager::get_texture(const std::string &relative_path)
     } else {
         std::pair<std::string, Texture> new_pair(
             relative_path,
-            { load_texture(root_dir + relative_path) }
+            { load_texture(base_dir + relative_path) } // initalise Texture
         );
         return textures.insert(new_pair).first->second;
     }

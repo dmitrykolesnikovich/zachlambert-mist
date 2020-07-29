@@ -9,7 +9,8 @@ namespace mist {
 
 // ----- 1: Construction -----
 
-Renderer::Renderer(std::string base_dir):base_dir(base_dir)
+Renderer::Renderer(std::string base_dir):
+    base_dir(base_dir), texture_manager(base_dir)
 {
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LESS);
@@ -50,7 +51,9 @@ bool Renderer::create_model_from_config(
 void Renderer::add_model(const std::string &name, Model &model)
 {
     Mesh *mesh;
+    Material *material;
     for (std::size_t i = 0; i < model.get_mesh_count(); i++) {
+        // Add mesh
         mesh = &model.get_mesh(i);
         mesh->vertices_offset = static_vertices.size();
         mesh->indices_offset = static_indices.size();
@@ -60,6 +63,16 @@ void Renderer::add_model(const std::string &name, Model &model)
         std::copy(
             mesh->indices.cbegin(), mesh->indices.cend(), static_indices.end()
         );
+        // Add material
+        material = &model.get_material(i);
+        if (material->type == MaterialType::TEXTURED) {
+            material->diffuse_texture_id = texture_manager.get_texture(
+                material->diffuse_texture_path
+            );
+            material->specular_texture_id = texture_manager.get_texture(
+                material->specular_texture_path
+            );
+        }
     }
 
     models.insert(std::pair<std::string, Model>(name, model));

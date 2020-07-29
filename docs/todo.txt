@@ -25,8 +25,7 @@
   - Load the vertices into the shared vertices vector
   - Load the indices into the shared indices vector
   - If it uses a texture, get the texture id, store in the material
-  - Add the material to the materials vector, store the index in the model
-  - Determine the material shader, and get the shader id
+  - Get a material id for the material and add to the material
 - For the model:
   - Store a ModelObject stucture, containing a vector of VAOs
     and vector of MaterialObjects, with the texture id and shader id

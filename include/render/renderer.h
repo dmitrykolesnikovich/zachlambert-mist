@@ -36,6 +36,7 @@
 #include "scene/entity.h"
 #include "data/resource_config.h"
 #include "scene/scene.h"
+#include "data/texture_manager.h"
 
 namespace mist {
 
@@ -76,7 +77,12 @@ private:
     void add_model(const std::string &name, Model &model);
     void process_model(const std::string &name, const Model &model);
 
+    // Variables for resource management
     std::string base_dir;
+    TextureManager texture_manager;
+    std::size_t material_id = 0;
+    std::size_t entity_id = 0;
+
     // Containers for processing loaded data 
     std::unordered_map<std::string, Shader> shaders;
     std::unordered_map<std::string, Texture> textures;
